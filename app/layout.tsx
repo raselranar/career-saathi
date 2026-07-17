@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Navbar } from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,8 +30,6 @@ export const metadata: Metadata = {
     "An AI-powered career coach that reviews job postings, generates tailored cover letters and resume bullets, and runs live mock interviews scoped to your target role.",
 };
 
-import { Navbar } from "@/components/navbar";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,8 +43,7 @@ export default function RootLayout({
         geistSans.variable,
         geistMono.variable,
         newsreader.variable,
-      )}
-    >
+      )}>
       <body className="min-h-full flex flex-col font-sans bg-paper-50">
         <Navbar />
         <main className="flex-1 flex flex-col">{children}</main>

@@ -3,11 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Briefcase01Icon,
-  ArrowRight01Icon,
-  Plus01Icon,
-} from "@hugeicons/core-free-icons";
+import { Briefcase01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 
 interface Job {
   _id: string;

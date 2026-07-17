@@ -1,4 +1,8 @@
 import { ObjectId } from "mongodb";
+import { auth } from "./auth";
+
+// session
+export type Session = typeof auth.$Infer.Session | null;
 
 // ─── User ───
 export interface User {
@@ -10,7 +14,11 @@ export interface User {
 }
 
 // ─── Job Posting ───
-export type EmploymentType = "full-time" | "part-time" | "internship" | "remote";
+export type EmploymentType =
+  | "full-time"
+  | "part-time"
+  | "internship"
+  | "remote";
 
 export type JobCategory =
   | "Engineering"
