@@ -29,6 +29,8 @@ export const metadata: Metadata = {
     "An AI-powered career coach that reviews job postings, generates tailored cover letters and resume bullets, and runs live mock interviews scoped to your target role.",
 };
 
+import { Navbar } from "@/components/navbar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,7 +46,10 @@ export default function RootLayout({
         newsreader.variable,
       )}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans bg-paper-50">
+        <Navbar />
+        <main className="flex-1 flex flex-col">{children}</main>
+      </body>
     </html>
   );
 }
