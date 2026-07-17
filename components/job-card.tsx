@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface JobCardProps {
@@ -24,13 +25,15 @@ export function JobCard({
   const initial = company.charAt(0).toUpperCase();
 
   return (
-    <div className="group flex h-[280px] flex-col justify-between rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm transition-all duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md">
+    <div className="group flex h-70 flex-col justify-between rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm transition-all duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md">
       {/* Top section */}
       <div>
         {/* Logo + Company */}
         <div className="mb-4 flex items-center gap-3">
           {companyLogoUrl ? (
-            <img
+            <Image
+              width={300}
+              height={300}
               src={companyLogoUrl}
               alt={`${company} logo`}
               className="h-10 w-10 rounded-lg object-contain"
@@ -61,8 +64,7 @@ export function JobCard({
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            strokeWidth={2}
-          >
+            strokeWidth={2}>
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -92,8 +94,7 @@ export function JobCard({
         {/* View Details */}
         <Link
           href={`/jobs/${id}`}
-          className="text-sm font-medium text-ink-700 underline-offset-4 transition-all hover:underline"
-        >
+          className="text-sm font-medium text-ink-700 underline-offset-4 transition-all hover:underline">
           View Details →
         </Link>
       </div>

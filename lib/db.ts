@@ -15,7 +15,6 @@ let clientPromise: Promise<MongoClient>;
 // In development, use a global variable to preserve the MongoClient
 // across hot-module-replacement (HMR) restarts.
 declare global {
-  // eslint-disable-next-line no-var
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
