@@ -65,10 +65,13 @@ function CoachChatContent({ params }: { params: Promise<{ jobId: string }> }) {
 
   // ✅ Helper to check if currently loading (v5 uses a status string)
   const isStreaming = status === "streaming" || status === "submitted";
-
+  // console.log("status: ", status);
+  // console.log("messages: ", messages);
   // Fetch job details and initialize/create a new conversation
   useEffect(() => {
+    console.log("this line 71 useeffect");
     async function init() {
+      console.log("this is init function line 72");
       try {
         setIsLoadingDetails(true);
         const jobRes = await fetch(`/api/jobs/${jobId}`);

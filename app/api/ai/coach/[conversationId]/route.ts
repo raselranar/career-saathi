@@ -8,6 +8,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ conversationId: string }> },
 ) {
+  console.log("this is get /api/ai/coach/[conversationId] route");
   try {
     const { conversationId } = await params;
     const session = await auth.api.getSession({
@@ -24,16 +25,19 @@ export async function GET(
     // If "new" is requested, check if we need to create one, or return a new ID
     if (conversationId === "new") {
       const jobId = request.nextUrl.searchParams.get("jobId");
-      
+
       const newConversation = {
         userId,
-        jobId: jobId && ObjectId.isValid(jobId) ? new ObjectId(jobId) : undefined,
+        jobId:
+          jobId && ObjectId.isValid(jobId) ? new ObjectId(jobId) : undefined,
         messages: [],
         createdAt: new Date(),
         updatedAt: new Date(),
       };
 
-      const result = await db.collection("coachConversation").insertOne(newConversation);
+      const result = await db
+        .collection("coachConversation")
+        .insertOne(newConversation);
       return NextResponse.json({
         _id: result.insertedId,
         ...newConversation,
@@ -41,7 +45,10 @@ export async function GET(
     }
 
     if (!ObjectId.isValid(conversationId)) {
-      return NextResponse.json({ error: "Invalid conversation ID" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid conversation ID" },
+        { status: 400 },
+      );
     }
 
     const conv = await db
@@ -49,7 +56,10 @@ export async function GET(
       .findOne({ _id: new ObjectId(conversationId) });
 
     if (!conv) {
-      return NextResponse.json({ error: "Conversation not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Conversation not found" },
+        { status: 404 },
+      );
     }
 
     if (conv.userId.toString() !== userId.toString()) {

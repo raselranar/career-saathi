@@ -15,7 +15,7 @@ import { Session } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
 export function NavbarClient({
-  initialSessionData,
+  initialSessionData: sessionData,
 }: {
   initialSessionData: Session;
 }) {
@@ -23,16 +23,7 @@ export function NavbarClient({
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Use better-auth's hook to keep auth state synced across tabs.
-  const { data: clientSessionData, isPending } = authClient.useSession();
-
-  // Prefer live client data if it exists, otherwise fall back to the server data.
-  const activeSessionData =
-    clientSessionData !== undefined ? clientSessionData : initialSessionData;
-
-  // We only show a loading state if we have NO server data AND the client is still checking.
-  const isLoading = isPending && initialSessionData === undefined;
-  const user = activeSessionData?.user;
+  const user = sessionData?.user;
 
   async function handleLogout() {
     await authClient.signOut();
@@ -61,7 +52,7 @@ export function NavbarClient({
       <div className="mx-auto max-w-7xl px-6 lg:px-16">
         <div className="flex h-16 items-center justify-between">
           {/* Logo Brand */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 min-w-0 shrink">
             <LinkComponent
               href="/"
               className="flex items-center gap-2 font-serif text-xl font-bold text-paper-900">
@@ -72,7 +63,7 @@ export function NavbarClient({
             </LinkComponent>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center gap-6 text-sm">
+            <div className="hidden min-[950px]:flex items-center gap-4 text-sm whitespace-nowrap shrink">
               {publicNav.map((link) => (
                 <LinkComponent
                   key={link.href}
@@ -82,7 +73,7 @@ export function NavbarClient({
                 </LinkComponent>
               ))}
 
-              {!isLoading && user && (
+              {user && (
                 <>
                   <span className="h-4 w-px bg-paper-200" />
                   {privateNav.map((link) => (
@@ -104,10 +95,8 @@ export function NavbarClient({
           </div>
 
           {/* Desktop Right Controls (Auth buttons) */}
-          <div className="hidden md:flex items-center gap-4">
-            {isLoading ? (
-              <div className="h-9 w-24 animate-pulse rounded-lg bg-paper-100" />
-            ) : user ? (
+          <div className="hidden min-[950px]:flex items-center gap-4">
+            {user ? (
               <div className="flex items-center gap-3">
                 <span className="text-xs text-paper-500 font-mono">
                   {user.name || user.email}
@@ -123,10 +112,15 @@ export function NavbarClient({
               </div>
             ) : (
               <>
-                <Button asChild variant="ghost" className="h-9 px-4 text-xs font-semibold text-paper-700 hover:text-ink-700">
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="h-9 px-4 text-xs font-semibold text-paper-700 hover:text-ink-700">
                   <LinkComponent href="/login">Sign In</LinkComponent>
                 </Button>
-                <Button asChild className="h-9 rounded-lg bg-ink-700 px-4 text-xs font-semibold text-paper-0 hover:bg-ink-500">
+                <Button
+                  asChild
+                  className="h-9 rounded-lg bg-ink-700 px-4 text-xs font-semibold text-paper-0 hover:bg-ink-500">
                   <LinkComponent href="/register">Register</LinkComponent>
                 </Button>
               </>
@@ -134,7 +128,7 @@ export function NavbarClient({
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden">
+          <div className="flex min-[950px]:hidden">
             <Button
               variant="outline"
               size="icon"
@@ -150,7 +144,7 @@ export function NavbarClient({
 
       {/* Mobile Drawer Menu */}
       {isOpen && (
-        <div className="border-t border-paper-100 bg-paper-0 py-4 px-6 md:hidden shadow-lg space-y-4">
+        <div className="border-t border-paper-100 bg-paper-0 py-4 px-6 min-[950px]:hidden shadow-lg space-y-4">
           <div className="flex flex-col gap-3 text-sm">
             {publicNav.map((link) => (
               <LinkComponent
@@ -162,7 +156,7 @@ export function NavbarClient({
               </LinkComponent>
             ))}
 
-            {!isLoading && user && (
+            {user && (
               <>
                 <div className="h-px bg-paper-100 my-1" />
                 {privateNav.map((link) => (
@@ -184,7 +178,7 @@ export function NavbarClient({
           </div>
 
           <div className="border-t border-paper-100 pt-4 flex flex-col gap-2">
-            {!isLoading && user ? (
+            {user ? (
               <>
                 <div className="text-xs text-paper-500 font-mono mb-1">
                   Logged in: {user.name || user.email}
@@ -203,11 +197,22 @@ export function NavbarClient({
               </>
             ) : (
               <>
-                <Button asChild variant="outline" className="h-10 w-full rounded-lg text-xs font-semibold text-paper-700">
-                  <LinkComponent href="/login" onClick={() => setIsOpen(false)}>Sign In</LinkComponent>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-10 w-full rounded-lg text-xs font-semibold text-paper-700">
+                  <LinkComponent href="/login" onClick={() => setIsOpen(false)}>
+                    Sign In
+                  </LinkComponent>
                 </Button>
-                <Button asChild className="h-10 w-full rounded-lg bg-ink-700 text-xs font-semibold text-paper-0">
-                  <LinkComponent href="/register" onClick={() => setIsOpen(false)}>Register</LinkComponent>
+                <Button
+                  asChild
+                  className="h-10 w-full rounded-lg bg-ink-700 text-xs font-semibold text-paper-0">
+                  <LinkComponent
+                    href="/register"
+                    onClick={() => setIsOpen(false)}>
+                    Register
+                  </LinkComponent>
                 </Button>
               </>
             )}

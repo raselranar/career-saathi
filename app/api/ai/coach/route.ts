@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { toUIMessageStream, createUIMessageStreamResponse } from "ai";
 import { getDb } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -36,34 +37,52 @@ export async function POST(request: NextRequest) {
         .collection("jobPosting")
         .findOne({ _id: new ObjectId(jobId) });
     }
-
     // Default mock context if no job found/passed
     const mockContext = {
       title: jobDetails?.title || "General Professional",
       company: jobDetails?.company || "Interviewer Corp",
       category: jobDetails?.category || "Engineering",
       employmentType: jobDetails?.employmentType || "full-time",
-      fullDescription: jobDetails?.fullDescription || "A mock interview to practice general professional, soft, and problem-solving skills.",
+      fullDescription:
+        jobDetails?.fullDescription ||
+        "A mock interview to practice general professional, soft, and problem-solving skills.",
     };
 
     const systemPrompt = buildCoachSystemPrompt(mockContext);
 
     // Format messages for Vercel AI SDK
-    // The client sends messages array from useChat: [{ id, role, content }]
-    const formattedMessages = messages.map((m: { role: string; content: string }) => ({
-      role: m.role as "user" | "assistant",
-      content: m.content,
-    }));
+    // useChat v5 sends UIMessage format with `parts` array, not flat `content`
+    const formattedMessages = messages
+      .map((m: { role: string; content?: string; parts?: Array<{ type: string; text?: string }> }) => {
+        // Extract text from parts array (useChat v5 format)
+        const textFromParts = m.parts
+          ?.filter((p) => p.type === "text")
+          .map((p) => p.text ?? "")
+          .join("") ?? "";
+
+        const content = textFromParts || m.content || "";
+        return { role: m.role as "user" | "assistant", content };
+      })
+      .filter((m) => m.content.length > 0);
 
     // If conversationId is passed, save history after streaming completes
     // Note: Better to let the client save or handle persistence. Let's persist
     // the user's latest chat turn in the DB asynchronously or via client.
     if (conversationId && ObjectId.isValid(conversationId)) {
-      const dbMessages = messages.map((m: { role: string; content: string }) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
-        createdAt: new Date(),
-      }));
+      const dbMessages = messages
+        .map((m: { role: string; content?: string; parts?: Array<{ type: string; text?: string }> }) => {
+          const textFromParts = m.parts
+            ?.filter((p) => p.type === "text")
+            .map((p) => p.text ?? "")
+            .join("") ?? "";
+          const content = textFromParts || m.content || "";
+          return {
+            role: m.role as "user" | "assistant",
+            content,
+            createdAt: new Date(),
+          };
+        })
+        .filter((m) => m.content.length > 0);
 
       // Async update in DB
       db.collection("coachConversation").updateOne(
@@ -100,7 +119,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return result.toTextStreamResponse();
+    return createUIMessageStreamResponse({
+      stream: toUIMessageStream({ stream: result.stream }),
+    });
   } catch (error) {
     console.error("Failed in mock coach API:", error);
     return NextResponse.json(

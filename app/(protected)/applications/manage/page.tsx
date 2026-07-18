@@ -7,6 +7,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { InkStrokeProgress } from "@/components/ink-stroke-progress";
 import { ApplicationStatus } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { File01Icon } from "@hugeicons/core-free-icons";
 
@@ -111,11 +112,45 @@ export default function ManageApplicationsPage() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-7xl px-6 py-12 animate-pulse lg:px-16">
-        <div className="h-8 w-48 rounded bg-paper-100 mb-8" />
+      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-16">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-10">
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-48 rounded bg-paper-100" />
+            <Skeleton className="h-4 w-72 rounded bg-paper-100" />
+          </div>
+          <div className="flex gap-3">
+            <Skeleton className="h-11 w-28 rounded-lg bg-paper-100" />
+            <Skeleton className="h-11 w-32 rounded-lg bg-paper-100" />
+          </div>
+        </div>
         <div className="space-y-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-24 rounded-xl bg-paper-100" />
+            <div
+              key={i}
+              className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm"
+            >
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex items-start gap-4 min-w-0 max-w-md">
+                  <Skeleton className="h-12 w-12 shrink-0 rounded-xl bg-paper-100" />
+                  <div className="space-y-2 flex-1">
+                    <Skeleton className="h-5 w-48 rounded bg-paper-100" />
+                    <Skeleton className="h-4 w-32 rounded bg-paper-100" />
+                    <div className="flex items-center gap-2 mt-3">
+                      <Skeleton className="h-5 w-20 rounded-full bg-paper-100" />
+                      <Skeleton className="h-7 w-24 rounded border border-paper-200 bg-paper-100" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-1 items-center justify-center lg:px-8">
+                  <Skeleton className="h-6 w-48 rounded bg-paper-100" />
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <Skeleton className="h-9 w-16 rounded-lg bg-paper-100" />
+                  <Skeleton className="h-9 w-20 rounded-lg bg-paper-100" />
+                  <Skeleton className="h-9 w-16 rounded-lg bg-paper-100" />
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
