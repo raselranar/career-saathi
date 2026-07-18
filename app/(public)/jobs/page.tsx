@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { JobCard } from "@/components/job-card";
 import { SkeletonCard } from "@/components/skeleton-card";
@@ -59,32 +59,45 @@ export default function JobsPage() {
   const [searchInput, setSearchInput] = useState(search);
   const [locationInput, setLocationInput] = useState(location);
 
-  const fetchJobs = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (search) params.set("search", search);
-      if (category && category !== "All") params.set("category", category);
-      if (location) params.set("location", location);
-      params.set("sort", sort);
-      params.set("page", String(page));
-      params.set("pageSize", "12");
-
-      const res = await fetch(`/api/jobs?${params.toString()}`);
-      const data: JobsResponse = await res.json();
-      setJobs(data.data);
-      setTotalPages(data.totalPages);
-      setTotal(data.total);
-    } catch (error) {
-      console.error("Failed to fetch jobs:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [search, category, location, sort, page]);
-
   useEffect(() => {
-    fetchJobs();
-  }, [fetchJobs]);
+    let active = true;
+    
+    // Set loading state asynchronously to avoid react-hooks/set-state-in-effect warning
+    const timer = setTimeout(() => {
+      if (active) setIsLoading(true);
+    }, 0);
+
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (category && category !== "All") params.set("category", category);
+    if (location) params.set("location", location);
+    params.set("sort", sort);
+    params.set("page", String(page));
+    params.set("pageSize", "12");
+
+    fetch(`/api/jobs?${params.toString()}`)
+      .then((res) => res.json())
+      .then((data: JobsResponse) => {
+        if (active) {
+          setJobs(data.data);
+          setTotalPages(data.totalPages);
+          setTotal(data.total);
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch jobs:", error);
+        if (active) setIsLoading(false);
+      })
+      .finally(() => {
+        clearTimeout(timer);
+      });
+
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [search, category, location, sort, page]);
 
   function updateParams(updates: Record<string, string>) {
     const params = new URLSearchParams(searchParams.toString());

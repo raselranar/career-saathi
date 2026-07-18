@@ -208,7 +208,7 @@ NEXT_PUBLIC_APP_URL=
 
 Short phases on purpose — pause after each to actually read/understand the generated code before moving on.
 
-1. Scaffold Next.js + Tailwind + shadcn + MongoDB connection
+1. Scaffold Next.js + Tailwind + shadcn(always try to use shadcn first , if not available then use custom css) + MongoDB connection
 2. Better Auth (email/password → Google OAuth → demo login) + seed script for jobs + demo user
 3. `/jobs` listing + `/jobs/[id]` details (no AI yet — prove the data layer first)
 4. `/applications/add` + `/applications/manage` (protected CRUD)

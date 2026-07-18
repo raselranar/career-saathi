@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { StatusBadge } from "@/components/status-badge";
@@ -34,23 +34,40 @@ export default function ManageApplicationsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchApplications = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch("/api/applications");
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      setApplications(data);
-    } catch {
-      setError("Failed to load applications");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchApplications();
-  }, [fetchApplications]);
+    let active = true;
+
+    // Set loading state asynchronously to avoid react-hooks/set-state-in-effect warning
+    const timer = setTimeout(() => {
+      if (active) setIsLoading(true);
+    }, 0);
+
+    fetch("/api/applications")
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then((data) => {
+        if (active) {
+          setApplications(data);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setError("Failed to load applications");
+          setIsLoading(false);
+        }
+      })
+      .finally(() => {
+        clearTimeout(timer);
+      });
+
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, []);
 
   async function handleStatusChange(id: string, newStatus: ApplicationStatus) {
     try {

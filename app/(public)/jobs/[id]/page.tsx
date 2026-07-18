@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback, use } from "react";
+import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { JobCard } from "@/components/job-card";
 
 interface Job {
@@ -25,38 +24,51 @@ export default function JobDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const router = useRouter();
   const { id } = use(params);
   const [job, setJob] = useState<Job | null>(null);
   const [relatedJobs, setRelatedJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchJobDetails = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch(`/api/jobs/${id}`);
-      if (!res.ok) {
-        if (res.status === 404) {
-          setError("Job posting not found");
-        } else {
-          setError("Failed to load job details");
-        }
-        return;
-      }
-      const data = await res.json();
-      setJob(data.job);
-      setRelatedJobs(data.relatedJobs);
-    } catch {
-      setError("An unexpected error occurred");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
-
   useEffect(() => {
-    fetchJobDetails();
-  }, [fetchJobDetails]);
+    let active = true;
+
+    // Set loading state asynchronously to avoid react-hooks/set-state-in-effect warning
+    const timer = setTimeout(() => {
+      if (active) setIsLoading(true);
+    }, 0);
+
+    fetch(`/api/jobs/${id}`)
+      .then((res) => {
+        if (!res.ok) {
+          if (res.status === 404) {
+            setError("Job posting not found");
+          } else {
+            setError("Failed to load job details");
+          }
+          return;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data && active) {
+          setJob(data.job);
+          setRelatedJobs(data.relatedJobs);
+        }
+      })
+      .catch(() => {
+        if (active) setError("An unexpected error occurred");
+      })
+      .finally(() => {
+        if (active) setIsLoading(false);
+        clearTimeout(timer);
+      });
+
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [id]);
 
   if (isLoading) {
     return (

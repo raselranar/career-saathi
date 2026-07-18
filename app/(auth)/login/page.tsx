@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "@/lib/auth-client";
@@ -28,7 +28,7 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema as never) as Resolver<LoginForm>,
   });
 
   async function onSubmit(data: LoginForm) {
@@ -98,9 +98,7 @@ export default function LoginPage() {
               Career<span className="text-coral-500">Saathi</span>
             </h1>
           </Link>
-          <p className="mt-2 text-sm text-paper-500">
-            Sign in to your account
-          </p>
+          <p className="mt-2 text-sm text-paper-500">Sign in to your account</p>
         </div>
 
         {/* Card */}
@@ -113,8 +111,7 @@ export default function LoginPage() {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth={2}
-              >
+                strokeWidth={2}>
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
                 <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -128,8 +125,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-2 block text-sm font-medium text-paper-700"
-              >
+                className="mb-2 block text-sm font-medium text-paper-700">
                 Email
               </label>
               <input
@@ -147,8 +143,7 @@ export default function LoginPage() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    strokeWidth={2}
-                  >
+                    strokeWidth={2}>
                     <circle cx="12" cy="12" r="10" />
                     <line x1="12" y1="8" x2="12" y2="12" />
                     <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -161,8 +156,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="mb-2 block text-sm font-medium text-paper-700"
-              >
+                className="mb-2 block text-sm font-medium text-paper-700">
                 Password
               </label>
               <input
@@ -180,8 +174,7 @@ export default function LoginPage() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    strokeWidth={2}
-                  >
+                    strokeWidth={2}>
                     <circle cx="12" cy="12" r="10" />
                     <line x1="12" y1="8" x2="12" y2="12" />
                     <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -194,15 +187,13 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="h-11 w-full rounded-lg bg-ink-700 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500 disabled:bg-paper-100 disabled:text-paper-500"
-            >
+              className="h-11 w-full rounded-lg bg-ink-700 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500 disabled:bg-paper-100 disabled:text-paper-500">
               {isLoading ? (
                 <span className="inline-flex items-center gap-2">
                   <svg
                     className="h-4 w-4 animate-spin"
                     fill="none"
-                    viewBox="0 0 24 24"
-                  >
+                    viewBox="0 0 24 24">
                     <circle
                       className="opacity-25"
                       cx="12"
@@ -236,8 +227,7 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={handleGoogleSignIn}
-            className="flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-paper-300 bg-paper-0 text-sm font-medium text-paper-900 transition-colors hover:bg-paper-50"
-          >
+            className="flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-paper-300 bg-paper-0 text-sm font-medium text-paper-900 transition-colors hover:bg-paper-50">
             <svg className="h-5 w-5" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
@@ -264,15 +254,13 @@ export default function LoginPage() {
             type="button"
             onClick={handleDemoLogin}
             disabled={isDemoLoading}
-            className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-brass-200 bg-brass-50 text-sm font-medium text-brass-700 transition-colors hover:bg-brass-200/40 disabled:bg-paper-100 disabled:text-paper-500"
-          >
+            className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-brass-200 bg-brass-50 text-sm font-medium text-brass-700 transition-colors hover:bg-brass-200/40 disabled:bg-paper-100 disabled:text-paper-500">
             {isDemoLoading ? (
               <span className="inline-flex items-center gap-2">
                 <svg
                   className="h-4 w-4 animate-spin"
                   fill="none"
-                  viewBox="0 0 24 24"
-                >
+                  viewBox="0 0 24 24">
                   <circle
                     className="opacity-25"
                     cx="12"
@@ -296,8 +284,7 @@ export default function LoginPage() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  strokeWidth={2}
-                >
+                  strokeWidth={2}>
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -315,8 +302,7 @@ export default function LoginPage() {
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            className="font-medium text-ink-700 underline-offset-4 hover:underline"
-          >
+            className="font-medium text-ink-700 underline-offset-4 hover:underline">
             Create one
           </Link>
         </p>

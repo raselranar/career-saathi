@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef, use, Suspense } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useChat } from "@ai-sdk/react";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -28,7 +27,6 @@ function CoachChatContent({
 }: {
   params: Promise<{ jobId: string }>;
 }) {
-  const router = useRouter();
   const { jobId } = use(params);
 
   const [job, setJob] = useState<Job | null>(null);

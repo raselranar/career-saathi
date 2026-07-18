@@ -5,12 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  Briefcase01Icon,
   Message01Icon,
   AiContentGenerator01Icon,
   ArrowRight01Icon,
-  CheckmarkCircle01Icon,
-  Calendar01Icon,
   ActivitySparkIcon,
 } from "@hugeicons/core-free-icons";
 import { StatusBadge } from "@/components/status-badge";
