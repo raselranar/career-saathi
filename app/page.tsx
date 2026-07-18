@@ -9,6 +9,7 @@ import {
   ArrowRight01Icon,
   CheckmarkCircle01Icon,
 } from "@hugeicons/core-free-icons";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   return (
@@ -47,7 +48,7 @@ export default function HomePage() {
           </div>
 
           {/* Right Hero Image/Animation Container */}
-          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[250px] lg:min-h-[350px]">
+          <div className="lg:col-span-5 relative flex items-center justify-center min-h-62.5 lg:min-h-87.5">
             {/* Winding Trail Line Background SVG */}
             <svg
               className="absolute w-full h-full text-ink-100 dark:text-ink-900"
@@ -315,7 +316,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-[280px]">
+            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
               <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
                 &ldquo;The AI Mock Interview Coach is incredibly smart. It
                 remembered my previous answer, pressed me on code performance,
@@ -336,7 +337,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-[280px]">
+            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
               <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
                 &ldquo;Creating tailored cover letters per job description was
                 my biggest bottleneck. With the Generator, I saved hours of
@@ -355,7 +356,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-[280px]">
+            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
               <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
                 &ldquo;I love the calm, clean layout of the application tracker.
                 It doesn&apos;t scream red flags at me for rejected
@@ -496,11 +497,11 @@ export default function HomePage() {
               required
               className="h-11 flex-1 rounded-lg border border-paper-300 bg-paper-0 px-4 text-base text-paper-900 placeholder:text-paper-500 focus:border-ink-500 focus:outline-none"
             />
-            <button
+            <Button
               type="submit"
               className="h-11 rounded-lg bg-ink-700 px-6 text-sm font-semibold text-paper-0 transition-colors hover:bg-ink-500 shrink-0">
               Subscribe
-            </button>
+            </Button>
           </form>
         </div>
       </section>
@@ -526,7 +527,7 @@ export default function HomePage() {
         </div>
 
         {/* Tiny grid background */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+        <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-size-[16px_16px]" />
       </section>
 
       {/* 10. Footer Section */}
