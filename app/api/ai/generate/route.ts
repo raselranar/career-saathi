@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { streamText } from "ai";
-import { google } from "@ai-sdk/google";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { streamTextWithFallback } from "@/lib/ai-models";
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,15 +35,15 @@ export async function POST(request: NextRequest) {
       length === "short"
         ? "Keep it very concise, around 1-2 paragraphs or 5 bullet points."
         : length === "long"
-        ? "Make it detailed and comprehensive, around 4-5 paragraphs or 10 bullet points."
-        : "Make it a standard medium length, around 3 paragraphs or 6-8 bullet points.";
+          ? "Make it detailed and comprehensive, around 4-5 paragraphs or 10 bullet points."
+          : "Make it a standard medium length, around 3 paragraphs or 6-8 bullet points.";
 
     const toneGuide =
       tone === "formal"
         ? "Use a professional, polite, and polished tone suited for traditional corporate settings."
         : tone === "friendly"
-        ? "Use a warm, approachable, and engaging tone that showcases personality."
-        : "Use a confident, energetic, and value-driven tone highlighting achievements.";
+          ? "Use a warm, approachable, and engaging tone that showcases personality."
+          : "Use a confident, energetic, and value-driven tone highlighting achievements.";
 
     let outputTypeGuide = "";
     if (outputType === "Cover Letter") {
@@ -80,12 +79,11 @@ Guidelines:
 4. Focus strictly on mapping the candidate's skills to the specific requirements of the job posting. Do not invent details not supported by the candidate's skills, but present their skills in the best possible light relative to the JD.
 5. Provide ONLY the final generated content without any introductory or concluding chatter.`;
 
-    const result = streamText({
-      model: google("gemini-2.0-flash"),
+    const result = await streamTextWithFallback({
       prompt,
     });
-
-    return result.toDataStreamResponse();
+    console.log(result.toTextStreamResponse());
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error("Failed to generate content:", error);
     return NextResponse.json(

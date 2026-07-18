@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { streamText } from "ai";
-import { google } from "@ai-sdk/google";
 import { getDb } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { ObjectId } from "mongodb";
 import { buildCoachSystemPrompt } from "@/lib/coach-prompt";
+import { streamTextWithFallback } from "@/lib/ai-models";
 
 export async function POST(request: NextRequest) {
   try {
@@ -79,12 +78,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = streamText({
-      model: google("gemini-2.0-flash"),
+    const result = await streamTextWithFallback({
       system: systemPrompt,
       messages: formattedMessages,
-      // When the stream finishes, we can save the final turn if needed
-      onFinish: async ({ text }) => {
+      onFinish: async ({ text }: { text: string }) => {
         if (conversationId && ObjectId.isValid(conversationId)) {
           // Append the final assistant response to the conversation in the database
           const assistantMsg = {
@@ -103,7 +100,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error("Failed in mock coach API:", error);
     return NextResponse.json(
