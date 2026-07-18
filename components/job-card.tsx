@@ -67,7 +67,7 @@ export function JobCard({
       </div>
 
       {/* Bottom section */}
-      <div className="flex items-center justify-between pt-4">
+      <div className="flex justify-between gap-2 pt-1 flex-col items-start">
         {/* Salary chip */}
         {salaryRange ? (
           <span className="rounded-full bg-brass-50 px-3 py-1 font-mono text-xs font-medium text-brass-700">
@@ -76,13 +76,14 @@ export function JobCard({
         ) : (
           <span />
         )}
-
         {/* View Details */}
-        <Link
-          href={`/jobs/${id}`}
-          className="text-sm font-medium text-ink-700 underline-offset-4 transition-all hover:underline">
-          View Details →
-        </Link>
+        <div className="flex justify-end w-full">
+          <Link
+            href={`/jobs/${id}`}
+            className="text-sm font-medium text-ink-700 underline-offset-4 transition-all hover:underline">
+            View Details →
+          </Link>
+        </div>
       </div>
     </div>
   );

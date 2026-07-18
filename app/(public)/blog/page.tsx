@@ -3,11 +3,20 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { SearchIcon, Calendar01Icon, Clock01Icon } from "@hugeicons/core-free-icons";
+import {
+  SearchIcon,
+  Calendar01Icon,
+  Clock01Icon,
+} from "@hugeicons/core-free-icons";
 import { BLOG_POSTS } from "@/lib/blog-data";
 import { Button } from "@/components/ui/button";
 
-const CATEGORIES = ["All", "Interview Prep", "Resume Building", "Career Strategy"];
+const CATEGORIES = [
+  "All",
+  "Interview Prep",
+  "Resume Building",
+  "Career Strategy",
+];
 
 export default function BlogListPage() {
   const [search, setSearch] = useState("");
@@ -35,7 +44,8 @@ export default function BlogListPage() {
             Career Insights & Strategy
           </h1>
           <p className="mt-2 text-base text-paper-500">
-            Expert advice on navigating the modern tech job market, crafting applications, and acing interviews.
+            Expert advice on navigating the modern tech job market, crafting
+            applications, and acing interviews.
           </p>
         </div>
 
@@ -48,8 +58,7 @@ export default function BlogListPage() {
                 key={cat}
                 variant={selectedCategory === cat ? "default" : "outline"}
                 onClick={() => startTransition(() => setSelectedCategory(cat))}
-                className="rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider"
-              >
+                className="rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider">
                 {cat}
               </Button>
             ))}
@@ -73,7 +82,9 @@ export default function BlogListPage() {
         {/* Blog Post Grid */}
         {filteredPosts.length === 0 ? (
           <div className="py-24 text-center">
-            <h3 className="text-lg font-semibold text-paper-900">No articles found</h3>
+            <h3 className="text-lg font-semibold text-paper-900">
+              No articles found
+            </h3>
             <p className="mt-1 text-sm text-paper-500">
               Try adjusting your search filters or browse other categories.
             </p>
@@ -83,8 +94,7 @@ export default function BlogListPage() {
             {filteredPosts.map((post) => (
               <article
                 key={post.slug}
-                className="group flex flex-col justify-between rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm hover:shadow-md transition-shadow duration-150"
-              >
+                className="group flex flex-col justify-between rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm hover:shadow-md transition-shadow duration-150">
                 <div>
                   {/* Category Pill */}
                   <span className="font-mono text-[10px] font-semibold text-brass-700 uppercase tracking-wider block mb-3">
@@ -106,7 +116,9 @@ export default function BlogListPage() {
                 <div className="mt-6 border-t border-paper-50 pt-4 flex items-center justify-between text-xs text-paper-400">
                   <div className="flex items-center gap-1">
                     <HugeiconsIcon icon={Calendar01Icon} size={14} />
-                    <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+                    <span>
+                      {new Date(post.publishedAt).toLocaleDateString()}
+                    </span>
                   </div>
                   <div className="flex items-center gap-1">
                     <HugeiconsIcon icon={Clock01Icon} size={14} />

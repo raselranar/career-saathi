@@ -10,6 +10,16 @@ import {
   CheckmarkCircle01Icon,
 } from "@hugeicons/core-free-icons";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function HomePage() {
   return (
@@ -19,10 +29,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-16 grid lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Hero Content */}
           <div className="lg:col-span-7 flex flex-col items-start gap-6 text-left">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-brass-50 px-3 py-1 font-mono text-xs font-semibold text-brass-700 uppercase tracking-wider">
+            <Badge className="inline-flex items-center gap-1.5 rounded-full bg-brass-50 px-3 py-1 font-mono text-xs font-semibold text-brass-700 uppercase tracking-wider">
               <HugeiconsIcon icon={CompassIcon} size={14} />
               Your Career Companion
-            </span>
+            </Badge>
             <h1 className="text-4xl font-semibold text-paper-900 tracking-tight font-display sm:text-6xl leading-tight">
               An AI-powered career coach for your job search trail.
             </h1>
@@ -197,73 +207,79 @@ export default function HomePage() {
 
           <div className="grid gap-8 md:grid-cols-3">
             {/* Feature 1 */}
-            <div className="flex flex-col h-full justify-between rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-150">
-              <div className="space-y-4">
+            <Card className="flex flex-col h-full justify-between rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-150">
+              <CardContent className="space-y-4 p-0">
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ink-50 text-ink-700">
                   <HugeiconsIcon icon={SparklesIcon} size={24} />
                 </span>
-                <h3 className="text-xl font-bold text-paper-900 font-serif">
+                <CardTitle className="text-xl font-bold text-paper-900 font-serif">
                   Tailored Content Generator
-                </h3>
+                </CardTitle>
                 <p className="text-sm text-paper-500 leading-relaxed font-sans">
                   Instantly craft custom cover letters, resume bullet points, or
                   LinkedIn summaries. Our engine matches your real technical
                   skills directly against the target job description.
                 </p>
-              </div>
-              <Link
-                href="/generator"
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-700 hover:underline">
-                Explore Generator
-                <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
-              </Link>
-            </div>
+              </CardContent>
+              <CardFooter className="p-0 pt-6">
+                <Link
+                  href="/generator"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-700 hover:underline">
+                  Explore Generator
+                  <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
+                </Link>
+              </CardFooter>
+            </Card>
 
             {/* Feature 2 */}
-            <div className="flex flex-col h-full justify-between rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-150">
-              <div className="space-y-4">
+            <Card className="flex flex-col h-full justify-between rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-150">
+              <CardContent className="space-y-4 p-0">
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-accent-foreground">
                   <HugeiconsIcon icon={AiChatIcon} size={24} />
                 </span>
-                <h3 className="text-xl font-bold text-paper-900 font-serif">
+                <CardTitle className="text-xl font-bold text-paper-900 font-serif">
                   AI Mock Interview Coach
-                </h3>
+                </CardTitle>
                 <p className="text-sm text-paper-500 leading-relaxed font-sans">
                   Practice talking under pressure. Our streaming interviewer
                   reviews your target job, asks questions, analyzes your
                   responses in real-time, and offers actionable feedback.
                 </p>
-              </div>
-              <Link
-                href="/coach"
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-700 hover:underline">
-                Meet the Coach
-                <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
-              </Link>
-            </div>
+              </CardContent>
+              <CardFooter className="p-0 pt-6">
+                <Link
+                  href="/coach"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-700 hover:underline">
+                  Meet the Coach
+                  <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
+                </Link>
+              </CardFooter>
+            </Card>
 
             {/* Feature 3 */}
-            <div className="flex flex-col h-full justify-between rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-150">
-              <div className="space-y-4">
+            <Card className="flex flex-col h-full justify-between rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-150">
+              <CardContent className="space-y-4 p-0">
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-coral-50 text-coral-700">
                   <HugeiconsIcon icon={TaskDone01Icon} size={24} />
                 </span>
-                <h3 className="text-xl font-bold text-paper-900 font-serif">
+                <CardTitle className="text-xl font-bold text-paper-900 font-serif">
                   Milestone Application Tracker
-                </h3>
+                </CardTitle>
                 <p className="text-sm text-paper-500 leading-relaxed font-sans">
                   Visualize your search pipeline cleanly. Our progress
                   indicators map your applications through every waypoint
                   without overwhelming dashboard clutter.
                 </p>
-              </div>
-              <Link
-                href="/applications/manage"
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-700 hover:underline">
-                View Tracker Board
-                <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
-              </Link>
-            </div>
+              </CardContent>
+              <CardFooter className="p-0 pt-6">
+                <Link
+                  href="/applications/manage"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-700 hover:underline">
+                  View Tracker Board
+                  <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
+                </Link>
+              </CardFooter>
+            </Card>
           </div>
         </div>
       </section>
@@ -314,65 +330,83 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
-              <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
-                &ldquo;The AI Mock Interview Coach is incredibly smart. It
-                remembered my previous answer, pressed me on code performance,
-                and helped me secure my senior frontend engineer role.&rdquo;
-              </p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink-700 text-sm font-semibold text-paper-0">
-                  AR
+            <Card className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
+              <CardContent className="p-0">
+                <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
+                  &ldquo;The AI Mock Interview Coach is incredibly smart. It
+                  remembered my previous answer, pressed me on code performance,
+                  and helped me secure my senior frontend engineer role.&rdquo;
+                </p>
+              </CardContent>
+              <CardFooter className="p-0 pt-6">
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-10 w-10 shrink-0">
+                    <AvatarFallback className="bg-ink-700 text-sm font-semibold text-paper-0">
+                      AR
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h4 className="text-sm font-semibold text-paper-900">
+                      Aris Rahman
+                    </h4>
+                    <p className="text-xs text-paper-500">
+                      Senior Frontend Developer
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-paper-900">
-                    Aris Rahman
-                  </h4>
-                  <p className="text-xs text-paper-500">
-                    Senior Frontend Developer
-                  </p>
-                </div>
-              </div>
-            </div>
+              </CardFooter>
+            </Card>
 
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
-              <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
-                &ldquo;Creating tailored cover letters per job description was
-                my biggest bottleneck. With the Generator, I saved hours of
-                boring work while maintaining my authentic voice.&rdquo;
-              </p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brass-700 text-sm font-semibold text-paper-0">
-                  SK
+            <Card className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
+              <CardContent className="p-0">
+                <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
+                  &ldquo;Creating tailored cover letters per job description was
+                  my biggest bottleneck. With the Generator, I saved hours of
+                  boring work while maintaining my authentic voice.&rdquo;
+                </p>
+              </CardContent>
+              <CardFooter className="p-0 pt-6">
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-10 w-10 shrink-0">
+                    <AvatarFallback className="bg-brass-700 text-sm font-semibold text-paper-0">
+                      SK
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h4 className="text-sm font-semibold text-paper-900">
+                      Sarah K.
+                    </h4>
+                    <p className="text-xs text-paper-500">Product Designer</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-paper-900">
-                    Sarah K.
-                  </h4>
-                  <p className="text-xs text-paper-500">Product Designer</p>
-                </div>
-              </div>
-            </div>
+              </CardFooter>
+            </Card>
 
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
-              <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
-                &ldquo;I love the calm, clean layout of the application tracker.
-                It doesn&apos;t scream red flags at me for rejected
-                applications, making the job search mental load much
-                lighter.&rdquo;
-              </p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-coral-700 text-sm font-semibold text-paper-0">
-                  TD
+            <Card className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm hover:shadow-md transition-shadow duration-150 flex flex-col justify-between h-70">
+              <CardContent className="p-0">
+                <p className="text-sm text-paper-700 font-sans leading-relaxed italic">
+                  &ldquo;I love the calm, clean layout of the application tracker.
+                  It doesn&apos;t scream red flags at me for rejected
+                  applications, making the job search mental load much
+                  lighter.&rdquo;
+                </p>
+              </CardContent>
+              <CardFooter className="p-0 pt-6">
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-10 w-10 shrink-0">
+                    <AvatarFallback className="bg-coral-700 text-sm font-semibold text-paper-0">
+                      TD
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h4 className="text-sm font-semibold text-paper-900">
+                      Tanvir Chowdhury
+                    </h4>
+                    <p className="text-xs text-paper-500">DevOps Engineer</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-paper-900">
-                    Tanvir Chowdhury
-                  </h4>
-                  <p className="text-xs text-paper-500">DevOps Engineer</p>
-                </div>
-              </div>
-            </div>
+              </CardFooter>
+            </Card>
           </div>
         </div>
       </section>
@@ -400,25 +434,25 @@ export default function HomePage() {
 
           <div className="grid gap-8 md:grid-cols-3">
             {BLOG_POSTS.slice(0, 3).map((post) => (
-              <article
+              <Card
                 key={post.slug}
                 className="group flex flex-col justify-between rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm hover:shadow-md transition-shadow duration-150 h-75">
-                <div>
+                <CardContent className="p-0">
                   <span className="font-mono text-[10px] font-semibold text-brass-700 uppercase tracking-wider block mb-3">
                     {post.category}
                   </span>
-                  <h3 className="text-lg font-bold text-paper-900 leading-tight group-hover:text-ink-700 font-display">
+                  <CardTitle className="text-lg font-bold text-paper-900 leading-tight group-hover:text-ink-700 font-display">
                     <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                  </h3>
+                  </CardTitle>
                   <p className="mt-3 text-sm text-paper-500 line-clamp-3 leading-relaxed font-sans">
                     {post.excerpt}
                   </p>
-                </div>
-                <div className="mt-6 border-t border-paper-50 pt-4 flex items-center justify-between text-xs text-paper-400 font-mono">
+                </CardContent>
+                <CardFooter className="p-0 mt-6 border-t border-paper-50 pt-4 flex items-center justify-between text-xs text-paper-400 font-mono">
                   <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
                   <span>{post.readingTime}</span>
-                </div>
-              </article>
+                </CardFooter>
+              </Card>
             ))}
           </div>
         </div>
@@ -437,42 +471,54 @@ export default function HomePage() {
           </div>
 
           <div className="space-y-6">
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
-              <h4 className="text-base font-bold text-paper-900 font-serif mb-2">
-                How does the AI Mock Interview Coach work?
-              </h4>
-              <p className="text-sm text-paper-700 font-sans leading-relaxed">
-                Our coach does not ask list-based static questions. Instead, it
-                reads the target job posting you save, assumes the persona of a
-                hiring manager, and asks questions. It reads your typed
-                responses and dynamically structures its follow-up questions
-                based on your background, offering brief feedback along the way.
-              </p>
-            </div>
+            <Card className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
+              <CardHeader className="p-0 mb-2">
+                <CardTitle className="text-base font-bold text-paper-900 font-serif">
+                  How does the AI Mock Interview Coach work?
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <p className="text-sm text-paper-700 font-sans leading-relaxed">
+                  Our coach does not ask list-based static questions. Instead, it
+                  reads the target job posting you save, assumes the persona of a
+                  hiring manager, and asks questions. It reads your typed
+                  responses and dynamically structures its follow-up questions
+                  based on your background, offering brief feedback along the way.
+                </p>
+              </CardContent>
+            </Card>
 
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
-              <h4 className="text-base font-bold text-paper-900 font-serif mb-2">
-                Is my resume data kept private?
-              </h4>
-              <p className="text-sm text-paper-700 font-sans leading-relaxed">
-                Yes, absolutely. We store your account profile and application
-                notes in a secure, private MongoDB database. All inputs passed
-                to the Gemini API are executed under transient contexts and are
-                not used to train public machine learning datasets.
-              </p>
-            </div>
+            <Card className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
+              <CardHeader className="p-0 mb-2">
+                <CardTitle className="text-base font-bold text-paper-900 font-serif">
+                  Is my resume data kept private?
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <p className="text-sm text-paper-700 font-sans leading-relaxed">
+                  Yes, absolutely. We store your account profile and application
+                  notes in a secure, private MongoDB database. All inputs passed
+                  to the Gemini API are executed under transient contexts and are
+                  not used to train public machine learning datasets.
+                </p>
+              </CardContent>
+            </Card>
 
-            <div className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
-              <h4 className="text-base font-bold text-paper-900 font-serif mb-2">
-                Can I try the platform without registering?
-              </h4>
-              <p className="text-sm text-paper-700 font-sans leading-relaxed">
-                Yes! We have designed a one-click **Try Demo Account** feature
-                on the sign-in page. This automatically logs you into a fully
-                seeded profile with mock applications, interview transcripts,
-                and sample data.
-              </p>
-            </div>
+            <Card className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
+              <CardHeader className="p-0 mb-2">
+                <CardTitle className="text-base font-bold text-paper-900 font-serif">
+                  Can I try the platform without registering?
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <p className="text-sm text-paper-700 font-sans leading-relaxed">
+                  Yes! We have designed a one-click **Try Demo Account** feature
+                  on the sign-in page. This automatically logs you into a fully
+                  seeded profile with mock applications, interview transcripts,
+                  and sample data.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -489,7 +535,7 @@ export default function HomePage() {
           </p>
 
           <form className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
+            <Input
               type="email"
               placeholder="Your email address"
               required

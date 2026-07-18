@@ -5,8 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { JobCard } from "@/components/job-card";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowLeft01Icon, Location01Icon, Calendar01Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowLeft01Icon,
+  Location01Icon,
+  Calendar01Icon,
+} from "@hugeicons/core-free-icons";
 import { Button } from "@/components/ui/button";
+import JobDetailsSkeleton from "./JobDetailsSkeleton";
 
 interface Job {
   _id: string;
@@ -74,29 +79,21 @@ export default function JobDetailPage({
   }, [id]);
 
   if (isLoading) {
-    return (
-      <div className="mx-auto max-w-5xl px-6 py-12 animate-pulse lg:px-8">
-        <div className="h-8 w-32 rounded bg-paper-100 mb-8" />
-        <div className="flex flex-col gap-8 md:flex-row">
-          <div className="flex-1 space-y-4">
-            <div className="h-10 w-2/3 rounded bg-paper-100" />
-            <div className="h-6 w-1/3 rounded bg-paper-100" />
-            <div className="h-40 rounded bg-paper-100" />
-          </div>
-          <div className="w-full md:w-80 h-64 rounded-xl bg-paper-100" />
-        </div>
-      </div>
-    );
+    return <JobDetailsSkeleton />;
   }
 
   if (error || !job) {
     return (
       <div className="mx-auto max-w-5xl px-6 py-24 text-center lg:px-8">
-        <h2 className="text-2xl font-bold text-paper-900">{error || "Job not found"}</h2>
+        <h2 className="text-2xl font-bold text-paper-900">
+          {error || "Job not found"}
+        </h2>
         <p className="mt-2 text-sm text-paper-500">
           The job posting you are looking for might have been closed or removed.
         </p>
-        <Button asChild className="mt-6 h-11 rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 hover:bg-ink-500">
+        <Button
+          asChild
+          className="mt-6 h-11 rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 hover:bg-ink-500">
           <Link href="/jobs">Browse All Jobs</Link>
         </Button>
       </div>
@@ -111,8 +108,7 @@ export default function JobDetailPage({
         {/* Back Link */}
         <Link
           href="/jobs"
-          className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-paper-500 hover:text-ink-700"
-        >
+          className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-paper-500 hover:text-ink-700">
           <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
           Back to Jobs
         </Link>
@@ -161,7 +157,9 @@ export default function JobDetailPage({
 
             {/* Description */}
             <div className="mt-8 border-t border-paper-100 pt-8">
-              <h2 className="text-lg font-semibold text-paper-900 mb-4">Job Description</h2>
+              <h2 className="text-lg font-semibold text-paper-900 mb-4">
+                Job Description
+              </h2>
               <div className="prose max-w-none text-paper-700 whitespace-pre-wrap font-sans text-base leading-relaxed">
                 {job.fullDescription}
               </div>
@@ -175,15 +173,25 @@ export default function JobDetailPage({
                 AI Career Coaching
               </h3>
               <p className="text-sm text-paper-700 mb-6">
-                Use CareerSaathi&apos;s agentic tools to customize your application and practice for the role.
+                Use CareerSaathi&apos;s agentic tools to customize your
+                application and practice for the role.
               </p>
 
               <div className="space-y-3">
-                <Button asChild className="h-11 w-full rounded-lg bg-ink-700 text-sm font-medium text-paper-0 hover:bg-ink-500">
-                  <Link href={`/generator?jobId=${job._id}`}>Generate Cover Letter</Link>
+                <Button
+                  asChild
+                  className="h-11 w-full rounded-lg bg-ink-700 text-sm font-medium text-paper-0 hover:bg-ink-500">
+                  <Link href={`/generator?jobId=${job._id}`}>
+                    Generate Cover Letter
+                  </Link>
                 </Button>
-                <Button asChild variant="outline" className="h-11 w-full rounded-lg text-sm font-medium text-ink-700 border-ink-700 hover:bg-paper-50">
-                  <Link href={`/coach/${job._id}`}>Practice Mock Interview</Link>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-11 w-full rounded-lg text-sm font-medium text-ink-700 border-ink-700 hover:bg-paper-50">
+                  <Link href={`/coach/${job._id}`}>
+                    Practice Mock Interview
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -191,12 +199,22 @@ export default function JobDetailPage({
             {/* Location / Date info */}
             <div className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm text-sm text-paper-700 space-y-3">
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Location01Icon} size={18} className="text-paper-500" />
+                <HugeiconsIcon
+                  icon={Location01Icon}
+                  size={18}
+                  className="text-paper-500"
+                />
                 <span>{job.location}</span>
               </div>
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Calendar01Icon} size={18} className="text-paper-500" />
-                <span>Posted on {new Date(job.postedAt).toLocaleDateString()}</span>
+                <HugeiconsIcon
+                  icon={Calendar01Icon}
+                  size={18}
+                  className="text-paper-500"
+                />
+                <span>
+                  Posted on {new Date(job.postedAt).toLocaleDateString()}
+                </span>
               </div>
             </div>
           </div>
@@ -205,7 +223,9 @@ export default function JobDetailPage({
         {/* Related Jobs Section */}
         {relatedJobs.length > 0 && (
           <div className="mt-16 border-t border-paper-100 pt-12">
-            <h2 className="text-xl font-bold text-paper-900 mb-6">Related Positions</h2>
+            <h2 className="text-xl font-bold text-paper-900 mb-6">
+              Related Positions
+            </h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {relatedJobs.map((rJob) => (
                 <JobCard
