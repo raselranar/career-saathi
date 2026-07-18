@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -13,6 +13,7 @@ import {
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { ApplicationStatus } from "@/lib/types";
+import { useSession } from "@/lib/auth-client";
 
 interface Job {
   _id: string;
@@ -32,23 +33,21 @@ interface Application {
 export default function DashboardPage() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [userName, setUserName] = useState("Professional");
+  const { data: session } = useSession();
+
+  const userName = useMemo(
+    () => session?.user?.name || session?.user?.email?.split("@")[0] || "Professional",
+    [session],
+  );
 
   useEffect(() => {
     async function fetchDashboardData() {
       try {
-        const [appRes, authRes] = await Promise.all([
-          fetch("/api/applications"),
-          fetch("/api/auth/session").then((r) => (r.ok ? r.json() : null)),
-        ]);
+        const appRes = await fetch("/api/applications");
 
         if (appRes.ok) {
           const appData = await appRes.json();
           setApplications(appData);
-        }
-
-        if (authRes && authRes.user) {
-          setUserName(authRes.user.name || authRes.user.email.split("@")[0]);
         }
       } catch (err) {
         console.error("Failed to load dashboard data", err);
@@ -76,14 +75,113 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-7xl px-6 py-12 animate-pulse lg:px-16">
-        <div className="h-8 w-48 rounded bg-paper-100 mb-8" />
-        <div className="grid gap-6 sm:grid-cols-4 mb-10">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-24 rounded-xl bg-paper-100" />
-          ))}
+      <div className="min-h-screen bg-paper-50 py-12 animate-pulse">
+        <div className="mx-auto max-w-7xl px-6 lg:px-16">
+          {/* Welcome Banner Skeleton */}
+          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="space-y-2">
+              <div className="h-8 w-64 rounded-lg bg-paper-200" />
+              <div className="h-4 w-80 rounded bg-paper-100" />
+            </div>
+            <div className="flex gap-3">
+              <div className="h-11 w-28 rounded-lg bg-paper-200" />
+              <div className="h-11 w-32 rounded-lg bg-paper-300" />
+            </div>
+          </div>
+
+          {/* Stats Grid Skeleton */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-10">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
+                <div className="h-2.5 w-24 rounded bg-paper-100" />
+                <div className="mt-3 h-8 w-12 rounded bg-paper-200" />
+              </div>
+            ))}
+          </div>
+
+          {/* Content Layout Skeleton */}
+          <div className="grid gap-8 lg:grid-cols-3">
+            {/* Left Column */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Recent Applications Skeleton */}
+              <div className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="h-5 w-40 rounded bg-paper-200" />
+                  <div className="h-3.5 w-20 rounded bg-paper-100" />
+                </div>
+                <div className="divide-y divide-paper-50">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="py-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-lg bg-paper-200" />
+                        <div className="space-y-1.5">
+                          <div className="h-3.5 w-40 rounded bg-paper-200" />
+                          <div className="h-3 w-28 rounded bg-paper-100" />
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="h-5 w-16 rounded-full bg-paper-100" />
+                        <div className="flex gap-2">
+                          <div className="h-8 w-8 rounded-lg bg-paper-100" />
+                          <div className="h-8 w-8 rounded-lg bg-paper-100" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Actions Skeleton */}
+              <div className="grid gap-6 sm:grid-cols-2">
+                {Array.from({ length: 2 }).map((_, i) => (
+                  <div key={i} className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
+                    <div className="mb-4 h-10 w-10 rounded-lg bg-paper-100" />
+                    <div className="h-4 w-36 rounded bg-paper-200 mb-2" />
+                    <div className="space-y-1.5">
+                      <div className="h-3 w-full rounded bg-paper-100" />
+                      <div className="h-3 w-3/4 rounded bg-paper-100" />
+                    </div>
+                    <div className="mt-4 h-3 w-24 rounded bg-paper-100" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column Skeleton */}
+            <div className="space-y-6">
+              {/* Pipeline Distribution Skeleton */}
+              <div className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
+                <div className="h-5 w-36 rounded bg-paper-200 mb-5" />
+                <div className="space-y-4">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <div className="h-3 w-20 rounded bg-paper-100" />
+                        <div className="h-3 w-4 rounded bg-paper-200" />
+                      </div>
+                      <div className="h-2 w-full rounded-full bg-paper-100" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Featured Guide Skeleton */}
+              <div className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm">
+                <div className="flex items-center gap-1.5 mb-4">
+                  <div className="h-5 w-5 rounded bg-paper-100" />
+                  <div className="h-4 w-24 rounded bg-paper-200" />
+                </div>
+                <div className="h-4 w-56 rounded bg-paper-200 mb-2" />
+                <div className="space-y-1.5 mb-4">
+                  <div className="h-3 w-full rounded bg-paper-100" />
+                  <div className="h-3 w-full rounded bg-paper-100" />
+                  <div className="h-3 w-2/3 rounded bg-paper-100" />
+                </div>
+                <div className="h-3 w-24 rounded bg-paper-100" />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="h-64 rounded-xl bg-paper-100" />
       </div>
     );
   }

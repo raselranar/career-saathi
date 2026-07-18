@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { jwt } from "better-auth/plugins";
+import { jwt, bearer } from "better-auth/plugins";
 import { MongoClient } from "mongodb";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
@@ -24,5 +24,5 @@ export const auth = betterAuth({
     },
   },
 
-  plugins: [jwt()],
+  plugins: [jwt(), bearer()],
 });

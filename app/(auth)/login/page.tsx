@@ -6,7 +6,8 @@ import Link from "next/link";
 import { Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "@/lib/auth-client";
+import { signIn, authClient } from "@/lib/auth-client";
+import { setJwtCookie } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AlertCircleIcon, Loading02Icon, User02Icon } from "@hugeicons/core-free-icons";
@@ -21,7 +22,11 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const rawCallback = searchParams.get("callbackUrl") || "/dashboard";
+  const callbackUrl =
+    rawCallback.startsWith("/") && !rawCallback.startsWith("//")
+      ? rawCallback
+      : "/dashboard";
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isDemoLoading, setIsDemoLoading] = useState(false);
@@ -33,6 +38,19 @@ export default function LoginPage() {
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema as never) as Resolver<LoginForm>,
   });
+
+  async function fetchAndStoreJwt() {
+    try {
+      await authClient.getSession({
+        fetchOptions: {
+          onSuccess: (ctx) => {
+            const jwt = ctx.response.headers.get("set-auth-jwt");
+            if (jwt) setJwtCookie(jwt);
+          },
+        },
+      });
+    } catch {}
+  }
 
   async function onSubmit(data: LoginForm) {
     setIsLoading(true);
@@ -47,6 +65,7 @@ export default function LoginPage() {
       if (result.error) {
         setError(result.error.message || "Invalid email or password");
       } else {
+        await fetchAndStoreJwt();
         router.push(callbackUrl);
         router.refresh();
       }
@@ -70,6 +89,7 @@ export default function LoginPage() {
       if (result.error) {
         setError("Demo account not available. Please seed the database first.");
       } else {
+        await fetchAndStoreJwt();
         router.push(callbackUrl);
         router.refresh();
       }

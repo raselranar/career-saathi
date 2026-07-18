@@ -13,12 +13,18 @@ import { ArrowLeft01Icon, AlertCircleIcon } from "@hugeicons/core-free-icons";
 const addAppSchema = z.object({
   title: z.string().min(2, "Job title is required"),
   company: z.string().min(2, "Company name is required"),
-  location: z.string().default("Remote"),
-  category: z.string().default("Engineering"),
-  employmentType: z.enum(["full-time", "part-time", "internship", "remote"]).default("full-time"),
-  fullDescription: z.string().min(10, "Job description must be at least 10 characters"),
+  location: z.string().optional(),
+  category: z.string().optional(),
+  employmentType: z
+    .enum(["full-time", "part-time", "internship", "remote"])
+    .optional(),
+  fullDescription: z
+    .string()
+    .min(10, "Job description must be at least 10 characters"),
   companyLogoUrl: z.string().optional().or(z.literal("")),
-  status: z.enum(["saved", "applied", "interviewing", "offer", "rejected"]).default("saved"),
+  status: z
+    .enum(["saved", "applied", "interviewing", "offer", "rejected"])
+    .optional(),
 });
 
 type AddAppForm = z.infer<typeof addAppSchema>;
@@ -82,21 +88,27 @@ export default function AddApplicationPage() {
       <div className="mx-auto max-w-2xl px-6">
         <Link
           href="/applications/manage"
-          className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-paper-500 hover:text-ink-700"
-        >
+          className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-paper-500 hover:text-ink-700">
           <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
           Back to Applications
         </Link>
 
         <div className="rounded-xl border border-paper-100 bg-paper-0 p-8 shadow-sm">
-          <h1 className="text-2xl font-bold text-paper-900 mb-2">Track New Application</h1>
+          <h1 className="text-2xl font-bold text-paper-900 mb-2">
+            Track New Application
+          </h1>
           <p className="text-sm text-paper-500 mb-6">
-            Enter the details of the job opportunity to start tracking and using AI tools.
+            Enter the details of the job opportunity to start tracking and using
+            AI tools.
           </p>
 
           {error && (
             <div className="mb-6 flex items-start gap-2 rounded-lg border border-coral-200 bg-coral-50 p-3 text-sm text-coral-700">
-              <HugeiconsIcon icon={AlertCircleIcon} size={16} className="mt-0.5 shrink-0" />
+              <HugeiconsIcon
+                icon={AlertCircleIcon}
+                size={16}
+                className="mt-0.5 shrink-0"
+              />
               <span>{error}</span>
             </div>
           )}
@@ -104,26 +116,57 @@ export default function AddApplicationPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm font-semibold text-paper-700">Job Title *</label>
-                <input type="text" placeholder="e.g. Frontend Engineer" className={inputCls} {...register("title")} />
-                {errors.title && <p className="mt-1 text-sm text-coral-700">{errors.title.message}</p>}
+                <label className="mb-2 block text-sm font-semibold text-paper-700">
+                  Job Title *
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Frontend Engineer"
+                  className={inputCls}
+                  {...register("title")}
+                />
+                {errors.title && (
+                  <p className="mt-1 text-sm text-coral-700">
+                    {errors.title.message}
+                  </p>
+                )}
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-semibold text-paper-700">Company Name *</label>
-                <input type="text" placeholder="e.g. Acme Corp" className={inputCls} {...register("company")} />
-                {errors.company && <p className="mt-1 text-sm text-coral-700">{errors.company.message}</p>}
+                <label className="mb-2 block text-sm font-semibold text-paper-700">
+                  Company Name *
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Acme Corp"
+                  className={inputCls}
+                  {...register("company")}
+                />
+                {errors.company && (
+                  <p className="mt-1 text-sm text-coral-700">
+                    {errors.company.message}
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
               <div>
-                <label className="mb-2 block text-sm font-semibold text-paper-700">Location</label>
-                <input type="text" placeholder="e.g. Remote / New York" className={inputCls} {...register("location")} />
+                <label className="mb-2 block text-sm font-semibold text-paper-700">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Remote / New York"
+                  className={inputCls}
+                  {...register("location")}
+                />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-semibold text-paper-700">Category</label>
+                <label className="mb-2 block text-sm font-semibold text-paper-700">
+                  Category
+                </label>
                 <select className={selectCls} {...register("category")}>
                   <option value="Engineering">Engineering</option>
                   <option value="Design">Design</option>
@@ -139,7 +182,9 @@ export default function AddApplicationPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-semibold text-paper-700">Type</label>
+                <label className="mb-2 block text-sm font-semibold text-paper-700">
+                  Type
+                </label>
                 <select className={selectCls} {...register("employmentType")}>
                   <option value="full-time">Full-time</option>
                   <option value="part-time">Part-time</option>
@@ -150,12 +195,21 @@ export default function AddApplicationPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-paper-700">Company Logo URL (Optional)</label>
-              <input type="url" placeholder="https://example.com/logo.png" className={inputCls} {...register("companyLogoUrl")} />
+              <label className="mb-2 block text-sm font-semibold text-paper-700">
+                Company Logo URL (Optional)
+              </label>
+              <input
+                type="url"
+                placeholder="https://example.com/logo.png"
+                className={inputCls}
+                {...register("companyLogoUrl")}
+              />
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-paper-700">Current Application Status</label>
+              <label className="mb-2 block text-sm font-semibold text-paper-700">
+                Current Application Status
+              </label>
               <select className={selectCls} {...register("status")}>
                 <option value="saved">Saved</option>
                 <option value="applied">Applied</option>
@@ -166,16 +220,32 @@ export default function AddApplicationPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-paper-700">Job Description *</label>
-              <textarea placeholder="Paste the full job description here. This feeds the AI generator and coach with context." className={textareaCls} {...register("fullDescription")} />
-              {errors.fullDescription && <p className="mt-1 text-sm text-coral-700">{errors.fullDescription.message}</p>}
+              <label className="mb-2 block text-sm font-semibold text-paper-700">
+                Job Description *
+              </label>
+              <textarea
+                placeholder="Paste the full job description here. This feeds the AI generator and coach with context."
+                className={textareaCls}
+                {...register("fullDescription")}
+              />
+              {errors.fullDescription && (
+                <p className="mt-1 text-sm text-coral-700">
+                  {errors.fullDescription.message}
+                </p>
+              )}
             </div>
 
             <div className="flex gap-3 justify-end pt-4 border-t border-paper-100">
-              <Button asChild variant="outline" className="h-11 rounded-lg px-6 text-sm font-medium text-paper-700 hover:bg-paper-50">
+              <Button
+                asChild
+                variant="outline"
+                className="h-11 rounded-lg px-6 text-sm font-medium text-paper-700 hover:bg-paper-50">
                 <Link href="/applications/manage">Cancel</Link>
               </Button>
-              <Button type="submit" disabled={isLoading} className="h-11 rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 hover:bg-ink-500">
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="h-11 rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 hover:bg-ink-500">
                 {isLoading ? "Saving..." : "Save Application"}
               </Button>
             </div>

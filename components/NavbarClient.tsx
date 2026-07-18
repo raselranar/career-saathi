@@ -9,24 +9,22 @@ import {
   Cancel01Icon,
   Logout01Icon,
 } from "@hugeicons/core-free-icons";
-import { authClient } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
+import { clearJwtCookie } from "@/lib/utils";
 import LinkComponent from "next/link";
-import { Session } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
-export function NavbarClient({
-  initialSessionData: sessionData,
-}: {
-  initialSessionData: Session;
-}) {
+export function NavbarClient() {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
 
-  const user = sessionData?.user;
+  const user = session?.user;
 
   async function handleLogout() {
     await authClient.signOut();
+    clearJwtCookie();
     router.push("/");
     router.refresh();
   }
