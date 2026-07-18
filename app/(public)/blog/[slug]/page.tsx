@@ -15,14 +15,7 @@ export default function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = use(params);
-  //   const [post, setPost] = useState<BlogPost | null>(null);
   const post = BLOG_POSTS.find((p) => p.slug === slug);
-
-  //   useEffect(() => {
-  //     if (found) {
-  //       setPost(found);
-  //     }
-  //   }, [slug]);
 
   if (!post) {
     return (

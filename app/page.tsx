@@ -29,7 +29,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-16 grid lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Hero Content */}
           <div className="lg:col-span-7 flex flex-col items-start gap-6 text-left">
-            <Badge className="inline-flex items-center gap-1.5 rounded-full bg-brass-50 px-3 py-1 font-mono text-xs font-semibold text-brass-700 uppercase tracking-wider">
+            <Badge className="gap-1.5 bg-brass-50 px-3 py-1 font-mono text-xs font-semibold text-brass-700 uppercase tracking-wider">
               <HugeiconsIcon icon={CompassIcon} size={14} />
               Your Career Companion
             </Badge>
