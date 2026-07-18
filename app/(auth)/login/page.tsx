@@ -7,6 +7,9 @@ import { Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { AlertCircleIcon, Loading02Icon, User02Icon } from "@hugeicons/core-free-icons";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -106,16 +109,7 @@ export default function LoginPage() {
           {/* Error message */}
           {error && (
             <div className="mb-4 flex items-start gap-2 rounded-lg border border-coral-200 bg-coral-50 p-3 text-sm text-coral-700">
-              <svg
-                className="mt-0.5 h-4 w-4 shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}>
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
+              <HugeiconsIcon icon={AlertCircleIcon} size={16} className="mt-0.5 shrink-0" />
               <span>{error}</span>
             </div>
           )}
@@ -138,16 +132,7 @@ export default function LoginPage() {
               />
               {errors.email && (
                 <p className="mt-1 flex items-center gap-1 text-sm text-coral-700">
-                  <svg
-                    className="h-3.5 w-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}>
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
+                  <HugeiconsIcon icon={AlertCircleIcon} size={14} />
                   {errors.email.message}
                 </p>
               )}
@@ -169,51 +154,26 @@ export default function LoginPage() {
               />
               {errors.password && (
                 <p className="mt-1 flex items-center gap-1 text-sm text-coral-700">
-                  <svg
-                    className="h-3.5 w-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}>
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
+                  <HugeiconsIcon icon={AlertCircleIcon} size={14} />
                   {errors.password.message}
                 </p>
               )}
             </div>
 
-            <button
+            <Button
               type="submit"
-              disabled={isLoading}
-              className="h-11 w-full rounded-lg bg-ink-700 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500 disabled:bg-paper-100 disabled:text-paper-500">
+              size="lg"
+              className="w-full"
+              disabled={isLoading}>
               {isLoading ? (
                 <span className="inline-flex items-center gap-2">
-                  <svg
-                    className="h-4 w-4 animate-spin"
-                    fill="none"
-                    viewBox="0 0 24 24">
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
+                  <HugeiconsIcon icon={Loading02Icon} size={16} className="animate-spin" />
                   Signing in…
                 </span>
               ) : (
                 "Sign In"
               )}
-            </button>
+            </Button>
           </form>
 
           {/* Divider */}
@@ -224,10 +184,12 @@ export default function LoginPage() {
           </div>
 
           {/* Google OAuth */}
-          <button
+          <Button
             type="button"
-            onClick={handleGoogleSignIn}
-            className="flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-paper-300 bg-paper-0 text-sm font-medium text-paper-900 transition-colors hover:bg-paper-50">
+            variant="outline"
+            size="lg"
+            className="w-full gap-2"
+            onClick={handleGoogleSignIn}>
             <svg className="h-5 w-5" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
@@ -247,54 +209,27 @@ export default function LoginPage() {
               />
             </svg>
             Continue with Google
-          </button>
+          </Button>
 
           {/* Demo Login */}
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={handleDemoLogin}
             disabled={isDemoLoading}
-            className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-brass-200 bg-brass-50 text-sm font-medium text-brass-700 transition-colors hover:bg-brass-200/40 disabled:bg-paper-100 disabled:text-paper-500">
+            className="mt-3 h-11 w-full rounded-lg border-brass-200 bg-brass-50 text-sm font-medium text-brass-700 hover:bg-brass-200/40 disabled:bg-paper-100 disabled:text-paper-500 gap-2">
             {isDemoLoading ? (
               <span className="inline-flex items-center gap-2">
-                <svg
-                  className="h-4 w-4 animate-spin"
-                  fill="none"
-                  viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                  />
-                </svg>
+                <HugeiconsIcon icon={Loading02Icon} size={16} className="animate-spin" />
                 Signing in…
               </span>
             ) : (
               <>
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                  />
-                </svg>
+                <HugeiconsIcon icon={User02Icon} size={16} />
                 Try Demo Account
               </>
             )}
-          </button>
+          </Button>
         </div>
 
         {/* Register link */}

@@ -1,6 +1,8 @@
 "use client";
 
 import { ApplicationStatus } from "@/lib/types";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Tick01Icon } from "@hugeicons/core-free-icons";
 
 interface InkStrokeProgressProps {
   status: ApplicationStatus;
@@ -74,15 +76,7 @@ export function InkStrokeProgress({ status }: InkStrokeProgressProps) {
               }`}
             >
               {isCompleted && !isCurrent ? (
-                <svg
-                  className="h-3.5 w-3.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={3}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
+                <HugeiconsIcon icon={Tick01Icon} size={14} />
               ) : (
                 <span className="text-[10px] font-mono font-semibold">{idx + 1}</span>
               )}

@@ -4,6 +4,9 @@ import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { JobCard } from "@/components/job-card";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowLeft01Icon, Location01Icon, Calendar01Icon } from "@hugeicons/core-free-icons";
+import { Button } from "@/components/ui/button";
 
 interface Job {
   _id: string;
@@ -93,12 +96,9 @@ export default function JobDetailPage({
         <p className="mt-2 text-sm text-paper-500">
           The job posting you are looking for might have been closed or removed.
         </p>
-        <Link
-          href="/jobs"
-          className="mt-6 inline-flex h-11 items-center justify-center rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500"
-        >
-          Browse All Jobs
-        </Link>
+        <Button asChild className="mt-6 h-11 rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 hover:bg-ink-500">
+          <Link href="/jobs">Browse All Jobs</Link>
+        </Button>
       </div>
     );
   }
@@ -113,9 +113,7 @@ export default function JobDetailPage({
           href="/jobs"
           className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-paper-500 hover:text-ink-700"
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-          </svg>
+          <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
           Back to Jobs
         </Link>
 
@@ -181,34 +179,23 @@ export default function JobDetailPage({
               </p>
 
               <div className="space-y-3">
-                <Link
-                  href={`/generator?jobId=${job._id}`}
-                  className="flex h-11 w-full items-center justify-center rounded-lg bg-ink-700 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500"
-                >
-                  Generate Cover Letter
-                </Link>
-                <Link
-                  href={`/coach/${job._id}`}
-                  className="flex h-11 w-full items-center justify-center rounded-lg border border-ink-700 bg-paper-0 text-sm font-medium text-ink-700 transition-colors hover:bg-paper-50"
-                >
-                  Practice Mock Interview
-                </Link>
+                <Button asChild className="h-11 w-full rounded-lg bg-ink-700 text-sm font-medium text-paper-0 hover:bg-ink-500">
+                  <Link href={`/generator?jobId=${job._id}`}>Generate Cover Letter</Link>
+                </Button>
+                <Button asChild variant="outline" className="h-11 w-full rounded-lg text-sm font-medium text-ink-700 border-ink-700 hover:bg-paper-50">
+                  <Link href={`/coach/${job._id}`}>Practice Mock Interview</Link>
+                </Button>
               </div>
             </div>
 
             {/* Location / Date info */}
             <div className="rounded-xl border border-paper-100 bg-paper-0 p-6 shadow-sm text-sm text-paper-700 space-y-3">
               <div className="flex items-center gap-2">
-                <svg className="h-4.5 w-4.5 text-paper-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                </svg>
+                <HugeiconsIcon icon={Location01Icon} size={18} className="text-paper-500" />
                 <span>{job.location}</span>
               </div>
               <div className="flex items-center gap-2">
-                <svg className="h-4.5 w-4.5 text-paper-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                </svg>
+                <HugeiconsIcon icon={Calendar01Icon} size={18} className="text-paper-500" />
                 <span>Posted on {new Date(job.postedAt).toLocaleDateString()}</span>
               </div>
             </div>

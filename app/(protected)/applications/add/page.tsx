@@ -6,6 +6,9 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowLeft01Icon, AlertCircleIcon } from "@hugeicons/core-free-icons";
 
 const addAppSchema = z.object({
   title: z.string().min(2, "Job title is required"),
@@ -81,9 +84,7 @@ export default function AddApplicationPage() {
           href="/applications/manage"
           className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-paper-500 hover:text-ink-700"
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-          </svg>
+          <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
           Back to Applications
         </Link>
 
@@ -95,11 +96,7 @@ export default function AddApplicationPage() {
 
           {error && (
             <div className="mb-6 flex items-start gap-2 rounded-lg border border-coral-200 bg-coral-50 p-3 text-sm text-coral-700">
-              <svg className="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
+              <HugeiconsIcon icon={AlertCircleIcon} size={16} className="mt-0.5 shrink-0" />
               <span>{error}</span>
             </div>
           )}
@@ -175,12 +172,12 @@ export default function AddApplicationPage() {
             </div>
 
             <div className="flex gap-3 justify-end pt-4 border-t border-paper-100">
-              <Link href="/applications/manage" className="flex h-11 items-center justify-center rounded-lg border border-paper-300 bg-paper-0 px-6 text-sm font-medium text-paper-700 transition-colors hover:bg-paper-50">
-                Cancel
-              </Link>
-              <button type="submit" disabled={isLoading} className="flex h-11 items-center justify-center rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500 disabled:opacity-50">
+              <Button asChild variant="outline" className="h-11 rounded-lg px-6 text-sm font-medium text-paper-700 hover:bg-paper-50">
+                <Link href="/applications/manage">Cancel</Link>
+              </Button>
+              <Button type="submit" disabled={isLoading} className="h-11 rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 hover:bg-ink-500">
                 {isLoading ? "Saving..." : "Save Application"}
-              </button>
+              </Button>
             </div>
           </form>
         </div>

@@ -11,6 +11,7 @@ import {
   ActivitySparkIcon,
 } from "@hugeicons/core-free-icons";
 import { StatusBadge } from "@/components/status-badge";
+import { Button } from "@/components/ui/button";
 import { ApplicationStatus } from "@/lib/types";
 
 interface Job {
@@ -101,18 +102,12 @@ export default function DashboardPage() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Link
-              href="/jobs"
-              className="flex h-11 items-center justify-center rounded-lg border border-paper-300 bg-paper-0 px-5 text-sm font-medium text-paper-700 transition-colors hover:bg-paper-50"
-            >
-              Browse Jobs
-            </Link>
-            <Link
-              href="/applications/add"
-              className="flex h-11 items-center justify-center rounded-lg bg-ink-700 px-5 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500"
-            >
-              Add Application
-            </Link>
+            <Button asChild variant="outline" className="h-11 rounded-lg px-5 text-sm font-medium text-paper-700 hover:bg-paper-50">
+              <Link href="/jobs">Browse Jobs</Link>
+            </Button>
+            <Button asChild className="h-11 rounded-lg bg-ink-700 px-5 text-sm font-medium text-paper-0 hover:bg-ink-500">
+              <Link href="/applications/add">Add Application</Link>
+            </Button>
           </div>
         </div>
 

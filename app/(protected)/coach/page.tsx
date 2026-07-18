@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Briefcase01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import { Button } from "@/components/ui/button";
 
 interface Job {
   _id: string;
@@ -178,16 +179,12 @@ export default function CoachSelectorPage() {
                   Tracked jobs automatically unlock tailored interview coaches.
                 </p>
                 <div className="mt-4 flex justify-center gap-3">
-                  <Link
-                    href="/applications/add"
-                    className="inline-flex h-9 items-center justify-center rounded-lg bg-ink-700 px-4 text-xs font-semibold text-paper-0 transition-colors hover:bg-ink-500">
-                    Track Custom Job
-                  </Link>
-                  <Link
-                    href="/jobs"
-                    className="inline-flex h-9 items-center justify-center rounded-lg border border-ink-700 bg-paper-0 px-4 text-xs font-semibold text-ink-700 transition-colors hover:bg-paper-50">
-                    Browse Catalog
-                  </Link>
+                  <Button asChild className="h-9 rounded-lg bg-ink-700 px-4 text-xs font-semibold text-paper-0 hover:bg-ink-500">
+                    <Link href="/applications/add">Track Custom Job</Link>
+                  </Button>
+                  <Button asChild variant="outline" className="h-9 rounded-lg px-4 text-xs font-semibold text-ink-700 border-ink-700 hover:bg-paper-50">
+                    <Link href="/jobs">Browse Catalog</Link>
+                  </Button>
                 </div>
               </div>
             )}

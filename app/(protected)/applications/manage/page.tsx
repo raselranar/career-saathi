@@ -6,6 +6,9 @@ import Image from "next/image";
 import { StatusBadge } from "@/components/status-badge";
 import { InkStrokeProgress } from "@/components/ink-stroke-progress";
 import { ApplicationStatus } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { File01Icon } from "@hugeicons/core-free-icons";
 
 interface Job {
   _id: string;
@@ -131,18 +134,12 @@ export default function ManageApplicationsPage() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Link
-              href="/jobs"
-              className="flex h-11 items-center justify-center rounded-lg border border-paper-300 bg-paper-0 px-5 text-sm font-medium text-paper-700 transition-colors hover:bg-paper-50"
-            >
-              Browse Jobs
-            </Link>
-            <Link
-              href="/applications/add"
-              className="flex h-11 items-center justify-center rounded-lg bg-ink-700 px-5 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500"
-            >
-              Track Custom Job
-            </Link>
+            <Button asChild variant="outline" className="h-11 rounded-lg px-5 text-sm font-medium text-paper-700 hover:bg-paper-50">
+              <Link href="/jobs">Browse Jobs</Link>
+            </Button>
+            <Button asChild className="h-11 rounded-lg bg-ink-700 px-5 text-sm font-medium text-paper-0 hover:bg-ink-500">
+              <Link href="/applications/add">Track Custom Job</Link>
+            </Button>
           </div>
         </div>
 
@@ -155,30 +152,15 @@ export default function ManageApplicationsPage() {
         {/* Empty State */}
         {applications.length === 0 ? (
           <div className="rounded-xl border border-dashed border-paper-300 bg-paper-0 py-24 text-center">
-            <svg
-              className="mx-auto mb-4 h-12 w-12 text-paper-300"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
+            <HugeiconsIcon icon={File01Icon} size={48} className="mx-auto mb-4 text-paper-300" />
             <h3 className="text-lg font-semibold text-paper-900">No applications tracked yet</h3>
             <p className="mt-1 text-sm text-paper-500 max-w-sm mx-auto">
               Browse seeded jobs and click &quot;Generate Cover Letter&quot; or track a completely custom opportunity manually.
             </p>
             <div className="mt-6 flex justify-center gap-3">
-              <Link
-                href="/jobs"
-                className="inline-flex h-10 items-center justify-center rounded-lg bg-ink-700 px-5 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500"
-              >
-                Browse Seeded Jobs
-              </Link>
+              <Button asChild className="h-10 rounded-lg bg-ink-700 px-5 text-sm font-medium text-paper-0 hover:bg-ink-500">
+                <Link href="/jobs">Browse Seeded Jobs</Link>
+              </Button>
             </div>
           </div>
         ) : (
@@ -245,26 +227,20 @@ export default function ManageApplicationsPage() {
                     <div className="flex flex-wrap items-center gap-3 shrink-0">
                       {job && (
                         <>
-                          <Link
-                            href={`/generator?jobId=${job._id}`}
-                            className="flex h-9 items-center justify-center rounded-lg bg-ink-700 px-4 text-xs font-semibold text-paper-0 transition-colors hover:bg-ink-500"
-                          >
-                            AI Gen
-                          </Link>
-                          <Link
-                            href={`/coach/${job._id}`}
-                            className="flex h-9 items-center justify-center rounded-lg border border-ink-700 bg-paper-0 px-4 text-xs font-semibold text-ink-700 transition-colors hover:bg-paper-50"
-                          >
-                            AI Coach
-                          </Link>
+                          <Button asChild className="h-9 rounded-lg bg-ink-700 px-4 text-xs font-semibold text-paper-0 hover:bg-ink-500">
+                            <Link href={`/generator?jobId=${job._id}`}>AI Gen</Link>
+                          </Button>
+                          <Button asChild variant="outline" className="h-9 rounded-lg px-4 text-xs font-semibold text-ink-700 border-ink-700 hover:bg-paper-50">
+                            <Link href={`/coach/${job._id}`}>AI Coach</Link>
+                          </Button>
                         </>
                       )}
-                      <button
+                      <Button
+                        variant="destructive"
                         onClick={() => handleDelete(app._id)}
-                        className="flex h-9 items-center justify-center rounded-lg border border-coral-700 bg-paper-0 px-4 text-xs font-semibold text-coral-700 transition-colors hover:bg-coral-50"
-                      >
+                        className="h-9 rounded-lg px-4 text-xs font-semibold border-coral-700 text-coral-700 hover:bg-coral-50">
                         Delete
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>

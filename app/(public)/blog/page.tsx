@@ -5,6 +5,7 @@ import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { SearchIcon, Calendar01Icon, Clock01Icon } from "@hugeicons/core-free-icons";
 import { BLOG_POSTS } from "@/lib/blog-data";
+import { Button } from "@/components/ui/button";
 
 const CATEGORIES = ["All", "Interview Prep", "Resume Building", "Career Strategy"];
 
@@ -43,17 +44,14 @@ export default function BlogListPage() {
           {/* Category tabs */}
           <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
             {CATEGORIES.map((cat) => (
-              <button
+              <Button
                 key={cat}
+                variant={selectedCategory === cat ? "default" : "outline"}
                 onClick={() => startTransition(() => setSelectedCategory(cat))}
-                className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors ${
-                  selectedCategory === cat
-                    ? "bg-ink-700 text-paper-0"
-                    : "bg-paper-0 border border-paper-200 text-paper-700 hover:bg-paper-50"
-                }`}
+                className="rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider"
               >
                 {cat}
-              </button>
+              </Button>
             ))}
           </div>
 

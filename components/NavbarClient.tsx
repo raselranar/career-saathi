@@ -12,6 +12,7 @@ import {
 import { authClient } from "@/lib/auth-client";
 import LinkComponent from "next/link";
 import { Session } from "@/lib/types";
+import { Button } from "@/components/ui/button";
 
 export function NavbarClient({
   initialSessionData,
@@ -111,39 +112,38 @@ export function NavbarClient({
                 <span className="text-xs text-paper-500 font-mono">
                   {user.name || user.email}
                 </span>
-                <button
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={handleLogout}
-                  className="flex h-9 items-center justify-center gap-1.5 rounded-lg border border-paper-300 bg-paper-0 px-4 text-xs font-semibold text-paper-700 transition-colors hover:bg-paper-50">
+                  className="gap-1.5">
                   <HugeiconsIcon icon={Logout01Icon} size={14} />
                   Logout
-                </button>
+                </Button>
               </div>
             ) : (
               <>
-                <LinkComponent
-                  href="/login"
-                  className="flex h-9 items-center justify-center px-4 text-xs font-semibold text-paper-700 hover:text-ink-700">
-                  Sign In
-                </LinkComponent>
-                <LinkComponent
-                  href="/register"
-                  className="flex h-9 items-center justify-center rounded-lg bg-ink-700 px-4 text-xs font-semibold text-paper-0 transition-colors hover:bg-ink-500">
-                  Register
-                </LinkComponent>
+                <Button asChild variant="ghost" className="h-9 px-4 text-xs font-semibold text-paper-700 hover:text-ink-700">
+                  <LinkComponent href="/login">Sign In</LinkComponent>
+                </Button>
+                <Button asChild className="h-9 rounded-lg bg-ink-700 px-4 text-xs font-semibold text-paper-0 hover:bg-ink-500">
+                  <LinkComponent href="/register">Register</LinkComponent>
+                </Button>
               </>
             )}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-paper-200 bg-paper-0 text-paper-500 hover:text-ink-700">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setIsOpen(!isOpen)}>
               <HugeiconsIcon
                 icon={isOpen ? Cancel01Icon : Menu01Icon}
                 size={18}
               />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -189,30 +189,26 @@ export function NavbarClient({
                 <div className="text-xs text-paper-500 font-mono mb-1">
                   Logged in: {user.name || user.email}
                 </div>
-                <button
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full justify-center gap-1.5"
                   onClick={() => {
                     setIsOpen(false);
                     handleLogout();
-                  }}
-                  className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-paper-300 bg-paper-0 text-xs font-semibold text-paper-700">
+                  }}>
                   <HugeiconsIcon icon={Logout01Icon} size={14} />
                   Logout
-                </button>
+                </Button>
               </>
             ) : (
               <>
-                <LinkComponent
-                  href="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="flex h-10 w-full items-center justify-center rounded-lg border border-paper-300 bg-paper-0 text-xs font-semibold text-paper-700">
-                  Sign In
-                </LinkComponent>
-                <LinkComponent
-                  href="/register"
-                  onClick={() => setIsOpen(false)}
-                  className="flex h-10 w-full items-center justify-center rounded-lg bg-ink-700 text-xs font-semibold text-paper-0">
-                  Register
-                </LinkComponent>
+                <Button asChild variant="outline" className="h-10 w-full rounded-lg text-xs font-semibold text-paper-700">
+                  <LinkComponent href="/login" onClick={() => setIsOpen(false)}>Sign In</LinkComponent>
+                </Button>
+                <Button asChild className="h-10 w-full rounded-lg bg-ink-700 text-xs font-semibold text-paper-0">
+                  <LinkComponent href="/register" onClick={() => setIsOpen(false)}>Register</LinkComponent>
+                </Button>
               </>
             )}
           </div>

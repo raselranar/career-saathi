@@ -5,7 +5,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { JobCard } from "@/components/job-card";
 import { SkeletonCard } from "@/components/skeleton-card";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Location01Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import {
+  Location01Icon,
+  Search01Icon,
+  InboxIcon,
+} from "@hugeicons/core-free-icons";
+import { Button } from "@/components/ui/button";
 
 const CATEGORIES = [
   "All",
@@ -163,31 +168,28 @@ export default function JobsPage() {
                 className="h-11 w-full rounded-xl border border-paper-300 bg-paper-0 pl-10 pr-4 text-base text-paper-900 placeholder:text-paper-500 focus:border-ink-500 focus:outline-none focus:ring-2 focus:ring-ink-500/20"
               />
             </div>
-            <button
+            <Button
               type="submit"
-              className="h-11 shrink-0 rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 transition-colors hover:bg-ink-500">
+              className="h-11 shrink-0 rounded-lg bg-ink-700 px-6 text-sm font-medium text-paper-0 hover:bg-ink-500">
               Search
-            </button>
+            </Button>
           </form>
         </div>
       </div>
 
       {/* Filters + Sort bar */}
-      <div className="border-b border-paper-100 bg-paper-0">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 overflow-x-auto px-6 py-3 lg:px-16">
+      <div className="border-b mx-auto max-w-7xl outline border-paper-100 bg-paper-0">
+        <div className="flex items-center gap-3 px-6 py-3 lg:px-16">
           {/* Category pills */}
           <div className="flex gap-2">
             {CATEGORIES.map((cat) => (
-              <button
+              <Button
                 key={cat}
+                variant={category === cat ? "default" : "ghost"}
                 onClick={() => updateParams({ category: cat })}
-                className={`shrink-0 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
-                  category === cat
-                    ? "bg-ink-700 text-paper-0"
-                    : "bg-paper-50 text-paper-700 hover:bg-paper-100"
-                }`}>
+                className="shrink-0 rounded-full px-3 py-1.5 text-sm font-medium">
                 {cat}
-              </button>
+              </Button>
             ))}
           </div>
 
@@ -213,18 +215,11 @@ export default function JobsPage() {
           </div>
         ) : jobs.length === 0 ? (
           <div className="py-24 text-center">
-            <svg
-              className="mx-auto mb-4 h-12 w-12 text-paper-300"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}>
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0"
-              />
-            </svg>
+            <HugeiconsIcon
+              icon={InboxIcon}
+              size={48}
+              className="mx-auto mb-4 text-paper-300"
+            />
             <h3 className="text-lg font-semibold text-paper-900">
               No jobs found
             </h3>
@@ -253,21 +248,23 @@ export default function JobsPage() {
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="mt-8 flex items-center justify-center gap-2">
-                <button
+                <Button
+                  variant="outline"
                   onClick={() => updateParams({ page: String(page - 1) })}
                   disabled={page <= 1}
-                  className="h-9 rounded-lg border border-paper-300 px-3 text-sm font-medium text-paper-700 transition-colors hover:bg-paper-50 disabled:opacity-50">
+                  className="h-9 rounded-lg px-3 text-sm font-medium text-paper-700 hover:bg-paper-50">
                   Previous
-                </button>
+                </Button>
                 <span className="px-3 font-mono text-sm text-paper-500">
                   {page} / {totalPages}
                 </span>
-                <button
+                <Button
+                  variant="outline"
                   onClick={() => updateParams({ page: String(page + 1) })}
                   disabled={page >= totalPages}
-                  className="h-9 rounded-lg border border-paper-300 px-3 text-sm font-medium text-paper-700 transition-colors hover:bg-paper-50 disabled:opacity-50">
+                  className="h-9 rounded-lg px-3 text-sm font-medium text-paper-700 hover:bg-paper-50">
                   Next
-                </button>
+                </Button>
               </div>
             )}
           </>

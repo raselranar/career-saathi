@@ -33,17 +33,15 @@ export default function HomePage() {
               job.
             </p>
             <div className="mt-4 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link
-                href="/login"
-                className="flex h-12 items-center justify-center gap-2 rounded-lg bg-ink-700 px-6 text-base font-semibold text-paper-0 transition-all hover:bg-ink-500 hover:-translate-y-0.5 shadow-sm">
-                Start for Free
-                <HugeiconsIcon icon={ArrowRight01Icon} size={18} />
-              </Link>
-              <Link
-                href="/jobs"
-                className="flex h-12 items-center justify-center rounded-lg border border-paper-300 bg-paper-0 px-6 text-base font-semibold text-paper-700 transition-all hover:bg-paper-50">
-                Browse Jobs
-              </Link>
+              <Button asChild className="h-12 rounded-lg bg-ink-700 px-6 text-base font-semibold text-paper-0 hover:bg-ink-500 hover:-translate-y-0.5 shadow-sm gap-2">
+                <Link href="/login">
+                  Start for Free
+                  <HugeiconsIcon icon={ArrowRight01Icon} size={18} />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="h-12 rounded-lg px-6 text-base font-semibold text-paper-700 hover:bg-paper-50">
+                <Link href="/jobs">Browse Jobs</Link>
+              </Button>
             </div>
           </div>
 
@@ -497,9 +495,7 @@ export default function HomePage() {
               required
               className="h-11 flex-1 rounded-lg border border-paper-300 bg-paper-0 px-4 text-base text-paper-900 placeholder:text-paper-500 focus:border-ink-500 focus:outline-none"
             />
-            <Button
-              type="submit"
-              className="h-11 rounded-lg bg-ink-700 px-6 text-sm font-semibold text-paper-0 transition-colors hover:bg-ink-500 shrink-0">
+            <Button type="submit" className="h-11 rounded-lg bg-ink-700 px-6 text-sm font-semibold text-paper-0 hover:bg-ink-500 shrink-0">
               Subscribe
             </Button>
           </form>
@@ -517,49 +513,18 @@ export default function HomePage() {
             your AI companion.
           </p>
           <div className="pt-4">
-            <Link
-              href="/login"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-coral-500 hover:bg-coral-700 px-8 text-base font-semibold text-paper-0 transition-all hover:-translate-y-0.5">
-              Create Your Free Account
-              <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} />
-            </Link>
+            <Button asChild className="h-12 rounded-lg bg-coral-500 hover:bg-coral-700 px-8 text-base font-semibold text-paper-0 hover:-translate-y-0.5 gap-2">
+              <Link href="/login">
+                Create Your Free Account
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} />
+              </Link>
+            </Button>
           </div>
         </div>
 
         {/* Tiny grid background */}
         <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-size-[16px_16px]" />
       </section>
-
-      {/* 10. Footer Section */}
-      <footer className="bg-paper-0 border-t border-paper-100 py-12">
-        <div className="mx-auto max-w-7xl px-6 lg:px-16 flex flex-col md:flex-row justify-between items-center gap-8 text-sm text-paper-500">
-          <div className="flex items-center gap-2 text-paper-900 font-bold font-serif text-lg">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-ink-700 text-paper-0">
-              C
-            </span>
-            CareerSaathi
-          </div>
-
-          <div className="flex flex-wrap gap-8 justify-center">
-            <Link href="/jobs" className="hover:text-ink-700 font-medium">
-              Find Jobs
-            </Link>
-            <Link href="/blog" className="hover:text-ink-700 font-medium">
-              Blog
-            </Link>
-            <Link href="/about" className="hover:text-ink-700 font-medium">
-              About
-            </Link>
-            <Link href="/privacy" className="hover:text-ink-700 font-medium">
-              Privacy Policy
-            </Link>
-          </div>
-
-          <div className="font-mono text-xs text-paper-400">
-            &copy; {new Date().getFullYear()} CareerSaathi. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
