@@ -5,6 +5,7 @@ import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Briefcase01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface Job {
   _id: string;
@@ -43,6 +44,7 @@ export default function CoachSelectorPage() {
         }
       } catch (err) {
         console.error("Failed to load coaching roles", err);
+        toast.error("Failed to load coaching data");
       } finally {
         setIsLoading(false);
       }

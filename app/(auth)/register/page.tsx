@@ -7,6 +7,7 @@ import { Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUp, signIn } from "@/lib/auth-client";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AlertCircleIcon } from "@hugeicons/core-free-icons";
@@ -48,13 +49,17 @@ export default function RegisterPage() {
         password: data.password,
       });
       if (result.error) {
-        setError(result.error.message || "Registration failed");
+        const msg = result.error.message || "Registration failed";
+        setError(msg);
+        toast.error(msg);
       } else {
+        toast.success("Account created successfully!");
         router.push("/dashboard");
         router.refresh();
       }
     } catch {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -65,6 +70,7 @@ export default function RegisterPage() {
       await signIn.social({ provider: "google", callbackURL: "/dashboard" });
     } catch {
       setError("Google sign-in failed. Please try again.");
+      toast.error("Google sign-in failed. Please try again.");
     }
   }
 

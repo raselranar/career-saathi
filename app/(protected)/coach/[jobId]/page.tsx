@@ -15,6 +15,7 @@ import {
   AlertCircleIcon,
   CheckmarkCircle01Icon,
 } from "@hugeicons/core-free-icons";
+import { toast } from "sonner";
 
 interface Job {
   _id: string;
@@ -57,6 +58,7 @@ function CoachChatContent({ params }: { params: Promise<{ jobId: string }> }) {
     },
     onError: (err) => {
       console.error("Chat streaming error:", err);
+      toast.error("Failed to get response. Please verify your Gemini API key.");
       setError(
         "Failed to get response. Please verify your Gemini API key in .env.local.",
       );
@@ -90,6 +92,7 @@ function CoachChatContent({ params }: { params: Promise<{ jobId: string }> }) {
         }
       } catch (err) {
         console.error(err);
+        toast.error("Could not load interview details");
         setError("Could not load interview details");
       } finally {
         setIsLoadingDetails(false);

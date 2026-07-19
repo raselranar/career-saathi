@@ -11,6 +11,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { authClient, useSession } from "@/lib/auth-client";
 import { clearJwtCookie } from "@/lib/utils";
+import { toast } from "sonner";
 import LinkComponent from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -23,10 +24,15 @@ export function NavbarClient() {
   const user = session?.user;
 
   async function handleLogout() {
-    await authClient.signOut();
-    clearJwtCookie();
-    router.push("/");
-    router.refresh();
+    try {
+      await authClient.signOut();
+      clearJwtCookie();
+      toast.success("Logged out successfully");
+      router.push("/");
+      router.refresh();
+    } catch {
+      toast.error("Failed to log out. Please try again.");
+    }
   }
 
   const activeCls = "text-ink-700 font-semibold";

@@ -11,6 +11,7 @@ import {
   Calendar01Icon,
 } from "@hugeicons/core-free-icons";
 import { Button } from "@/components/ui/button";
+import { TrackButton } from "@/components/track-button";
 import JobDetailsSkeleton from "./JobDetailsSkeleton";
 
 interface Job {
@@ -37,6 +38,7 @@ export default function JobDetailPage({
   const [relatedJobs, setRelatedJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isTracked, setIsTracked] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -76,6 +78,20 @@ export default function JobDetailPage({
       active = false;
       clearTimeout(timer);
     };
+  }, [id]);
+
+  useEffect(() => {
+    fetch("/api/applications")
+      .then((res) => {
+        if (!res.ok) return [];
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setIsTracked(data.some((app: { jobId: string }) => app.jobId === id));
+        }
+      })
+      .catch(() => {});
   }, [id]);
 
   if (isLoading) {
@@ -178,6 +194,12 @@ export default function JobDetailPage({
               </p>
 
               <div className="space-y-3">
+                <TrackButton
+                  jobId={job._id}
+                  isTracked={isTracked}
+                  onTrackChange={(_, tracked) => setIsTracked(tracked)}
+                  className="h-11 w-full rounded-lg text-sm font-medium"
+                />
                 <Button
                   asChild
                   className="h-11 w-full rounded-lg bg-ink-700 text-sm font-medium text-paper-0 hover:bg-ink-500">

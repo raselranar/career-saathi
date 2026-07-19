@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { File01Icon } from "@hugeicons/core-free-icons";
+import { toast } from "sonner";
 
 interface Job {
   _id: string;
@@ -60,6 +61,7 @@ export default function ManageApplicationsPage() {
       .catch(() => {
         if (active) {
           setError("Failed to load applications");
+          toast.error("Failed to load applications");
           setIsLoading(false);
         }
       })
@@ -90,12 +92,13 @@ export default function ManageApplicationsPage() {
         prev.map((app) => (app._id === id ? { ...app, status: newStatus } : app)),
       );
     } catch {
-      alert("Failed to update status");
+      toast.error("Failed to update status");
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Are you sure you want to remove this application?")) return;
+    const confirmed = window.confirm("Are you sure you want to remove this application?");
+    if (!confirmed) return;
 
     try {
       const res = await fetch(`/api/applications/${id}`, {
@@ -105,8 +108,9 @@ export default function ManageApplicationsPage() {
       if (!res.ok) throw new Error();
 
       setApplications((prev) => prev.filter((app) => app._id !== id));
+      toast.success("Application removed");
     } catch {
-      alert("Failed to delete application");
+      toast.error("Failed to delete application");
     }
   }
 

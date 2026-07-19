@@ -6,6 +6,7 @@ import { JobCard } from "@/components/job-card";
 import { SkeletonCard } from "@/components/skeleton-card";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Location01Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import { toast } from "sonner";
 
 const CATEGORIES = [
   "All",
@@ -49,6 +50,7 @@ export default function JobsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
+  const [trackedJobIds, setTrackedJobIds] = useState<Set<string>>(new Set());
 
   // Read params
   const search = searchParams.get("search") || "";
@@ -89,6 +91,7 @@ export default function JobsPage() {
       })
       .catch((error) => {
         console.error("Failed to fetch jobs:", error);
+        toast.error("Failed to load jobs. Please try again.");
         if (active) setIsLoading(false);
       })
       .finally(() => {
@@ -100,6 +103,29 @@ export default function JobsPage() {
       clearTimeout(timer);
     };
   }, [search, category, location, sort, page]);
+
+  useEffect(() => {
+    fetch("/api/applications")
+      .then((res) => {
+        if (!res.ok) return [];
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setTrackedJobIds(new Set(data.map((app: { jobId: string }) => app.jobId)));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  function handleTrackChange(jobId: string, tracked: boolean) {
+    setTrackedJobIds((prev) => {
+      const next = new Set(prev);
+      if (tracked) next.add(jobId);
+      else next.delete(jobId);
+      return next;
+    });
+  }
 
   function updateParams(updates: Record<string, string>) {
     const params = new URLSearchParams(searchParams.toString());
@@ -246,6 +272,8 @@ export default function JobsPage() {
                   salaryRange={job.salaryRange}
                   employmentType={job.employmentType}
                   category={job.category}
+                  isTracked={trackedJobIds.has(job._id)}
+                  onTrackChange={handleTrackChange}
                 />
               ))}
             </div>

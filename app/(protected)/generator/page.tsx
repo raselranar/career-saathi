@@ -66,7 +66,7 @@ function GeneratorFormContent() {
         if (res.ok) {
           const data = await res.json();
           setApplications(data);
-
+          console.log({ data });
           // If a jobId param is present, select and auto-fill it
           if (jobIdParam) {
             const foundApp = data.find(
@@ -90,7 +90,7 @@ function GeneratorFormContent() {
           }
         }
       } catch {
-        console.error("Failed to load applications");
+        toast.error("Failed to load your applications.");
       }
     }
     fetchApps();
@@ -148,6 +148,7 @@ function GeneratorFormContent() {
           ? err.message
           : "Something went wrong. Please check your API keys and try again.";
       setError(message);
+      toast.error(message);
     } finally {
       setIsGenerating(false);
     }
@@ -156,9 +157,7 @@ function GeneratorFormContent() {
   // Save the generated cover letter to the database
   async function saveToApplication() {
     if (!selectedAppId) {
-      setError(
-        "Please select a tracked application from the dropdown above to save this letter.",
-      );
+      toast.warning("Please select a tracked application to save.");
       return;
     }
 

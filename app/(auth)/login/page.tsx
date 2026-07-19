@@ -8,6 +8,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn, authClient } from "@/lib/auth-client";
 import { setJwtCookie } from "@/lib/utils";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AlertCircleIcon, Loading02Icon, User02Icon } from "@hugeicons/core-free-icons";
@@ -63,7 +64,9 @@ export default function LoginPage() {
       });
 
       if (result.error) {
-        setError(result.error.message || "Invalid email or password");
+        const msg = result.error.message || "Invalid email or password";
+        setError(msg);
+        toast.error(msg);
       } else {
         await fetchAndStoreJwt();
         router.push(callbackUrl);
@@ -71,6 +74,7 @@ export default function LoginPage() {
       }
     } catch {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -88,6 +92,7 @@ export default function LoginPage() {
 
       if (result.error) {
         setError("Demo account not available. Please seed the database first.");
+        toast.error("Demo account not available. Please seed the database first.");
       } else {
         await fetchAndStoreJwt();
         router.push(callbackUrl);
@@ -95,6 +100,7 @@ export default function LoginPage() {
       }
     } catch {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsDemoLoading(false);
     }
@@ -108,6 +114,7 @@ export default function LoginPage() {
       });
     } catch {
       setError("Google sign-in failed. Please try again.");
+      toast.error("Google sign-in failed. Please try again.");
     }
   }
 

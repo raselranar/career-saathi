@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Location01Icon } from "@hugeicons/core-free-icons";
+import { TrackButton } from "@/components/track-button";
 
 interface JobCardProps {
   id: string;
@@ -12,6 +13,8 @@ interface JobCardProps {
   salaryRange?: string;
   employmentType: string;
   category: string;
+  isTracked?: boolean;
+  onTrackChange?: (jobId: string, tracked: boolean) => void;
 }
 
 export function JobCard({
@@ -22,6 +25,8 @@ export function JobCard({
   location,
   salaryRange,
   employmentType,
+  isTracked = false,
+  onTrackChange,
 }: JobCardProps) {
   // Generate initial-letter avatar if no logo
   const initial = company.charAt(0).toUpperCase();
@@ -74,12 +79,22 @@ export function JobCard({
             {salaryRange}
           </span>
         ) : null}
-        {/* View Details */}
-        <Link
-          href={`/jobs/${id}`}
-          className="shrink-0 text-sm font-medium text-ink-700 underline-offset-4 transition-all hover:underline">
-          View Details →
-        </Link>
+        <div className="flex items-center gap-3 shrink-0">
+          {onTrackChange && (
+            <TrackButton
+              jobId={id}
+              isTracked={isTracked}
+              onTrackChange={onTrackChange}
+              variant="outline"
+              className="h-8 rounded-lg px-3 text-xs font-semibold"
+            />
+          )}
+          <Link
+            href={`/jobs/${id}`}
+            className="shrink-0 text-sm font-medium text-ink-700 underline-offset-4 transition-all hover:underline">
+            View Details →
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowLeft01Icon, AlertCircleIcon } from "@hugeicons/core-free-icons";
 
@@ -65,12 +66,15 @@ export default function AddApplicationPage() {
 
       if (!res.ok) {
         setError(result.error || "Failed to add application");
+        toast.error(result.error || "Failed to add application");
       } else {
+        toast.success("Application added successfully!");
         router.push("/applications/manage");
         router.refresh();
       }
     } catch {
       setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }

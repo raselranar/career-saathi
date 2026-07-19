@@ -14,6 +14,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { ApplicationStatus } from "@/lib/types";
 import { useSession } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 interface Job {
   _id: string;
@@ -51,6 +52,7 @@ export default function DashboardPage() {
         }
       } catch (err) {
         console.error("Failed to load dashboard data", err);
+        toast.error("Failed to load dashboard data");
       } finally {
         setIsLoading(false);
       }
